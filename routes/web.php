@@ -7,12 +7,13 @@ use App\Models\Persona;
 
 
 
-Route::get('/', function () {
-    return view('auth.login');
-});
+// Route::get('/', function () {
+//     return view('auth.login');
+// });
 
 Route::get('/personas', function () {
-    return view('personas.index');
+    $personas = Persona::all();
+    return view('personas.index', compact('personas'));
 })->name('personas.index');
 
 Route::get('/personas/create', function () {
@@ -26,10 +27,6 @@ Route::post('/personas', function (StorePersonaRequest $request) {
     $model->save();
     return redirect()->route('personas.index')->with('info', 'Persona creada exitosamente');
 })->name('personas.store');
-
-Route::get('/dashboard', function () {
-    return view('dashboard');
-})->middleware(['auth', 'verified'])->name('dashboard');
 
 Route::middleware('auth')->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');

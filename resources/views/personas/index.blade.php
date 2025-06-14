@@ -14,10 +14,29 @@
                                     {{ session('info') }}
                                 </div>
                             @endif
-                            <table class="table table-bordered">
+                            <table class="table table-bordered table-sm">
                                 <thead>
-                                    
+                                    <tr>
+                                        <th>Nombre</th>
+                                        <th>Apellido</th>
+                                        <th>Cédula</th>
+                                        <th>Celular</th>
+                                        <th>Dirección</th>
+                                        <th>Acciones</th>
+                                    </tr>
                                 </thead>
+                                <tbody>
+                                    @foreach ($personas as $persona)
+                                        <tr>
+                                            <td>{{ $persona->nombre }}</td>
+                                            <td>{{ $persona->apellido }}</td>
+                                            <td>{{ $persona->nuip }}</td>
+                                            <td>{{ $persona->telefono }}</td>
+                                            <td>{{ $persona->direccion }}</td>
+                                            
+                                        </tr>
+                                    @endforeach
+                                </tbody>
                             </table>
                         </div>
                     </div>
