@@ -5,11 +5,11 @@ use Illuminate\Support\Facades\Route;
 
 Route::get('/personas', function () {
     return view('personas.index');
-});
+})->name('personas.index');
 
 Route::get('/personas/create', function () {
     return view('personas.create');
-});
+})->name('personas.create');
 
 Route::get('/dashboard', function () {
     return view('dashboard');

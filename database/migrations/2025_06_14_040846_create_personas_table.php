@@ -16,10 +16,8 @@ return new class extends Migration
             $table->string('nombre');
             $table->string('apellido');
             $table->integer('nuip')->unique();
-            $table->string('email')->unique();
-            $table->string('telefono')->nullable();
-            $table->string('direccion')->nullable();
-            $table->string('tipo_persona');
+            $table->string('telefono');
+            $table->string('direccion');
             $table->timestamps();
         });
     }

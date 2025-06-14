@@ -9,7 +9,6 @@ use Illuminate\Database\Eloquent\Model;
  * @property string $nombre
  * @property string $apellido
  * @property int $nuip
- * @property string $email
  * @property string $telefono
  * @property string $direccion
  * @property string $created_at

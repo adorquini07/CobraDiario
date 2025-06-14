@@ -6,7 +6,7 @@
                     <div class="card">
                         <div class="card-header">
                             Personas
-                            <a href="" class="btn btn-success btn-sm float-end">Crear Persona</a>
+                            <a href="{{ route('personas.create') }}" class="btn btn-success btn-sm float-end">Crear Persona</a>
                         </div>
                         <div class="card-body">
                             <table class="table table-bordered">
