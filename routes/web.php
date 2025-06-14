@@ -24,7 +24,7 @@ Route::post('/personas', function (StorePersonaRequest $request) {
     $model = new Persona();
     $model->fill($validated);
     $model->save();
-    return redirect()->route('personas.index')->with('success', 'Persona creada exitosamente');
+    return redirect()->route('personas.index')->with('info', 'Persona creada exitosamente');
 })->name('personas.store');
 
 Route::get('/dashboard', function () {
