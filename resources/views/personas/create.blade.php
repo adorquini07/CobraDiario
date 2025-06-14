@@ -8,7 +8,16 @@
                     Crear Persona
                 </div>
                 <div class="card-body">
-                    <form action="" method="post">
+                    @if ($errors->any())
+                        <div class="alert alert-danger">
+                            <ul>
+                                @foreach ($errors->all() as $error)
+                                    <li>{{ $error }}</li>
+                                @endforeach
+                            </ul>
+                        </div>
+                    @endif
+                    <form action="{{ route('personas.store') }}" method="post">
                         @csrf
                         <div class="form-group">
                             <label for="nombre">Nombres:</label>
@@ -20,11 +29,11 @@
                         </div>
                         <div class="form-group">
                             <label for="cedula">Cédula:</label>
-                            <input type="text" name="cedula" id="cedula" class="form-control">
+                            <input type="text" name="nuip" id="nuip" class="form-control">
                         </div>
                         <div class="form-group">
                             <label for="email">Celular:</label>
-                            <input type="number" name="celular" id="celular" class="form-control">
+                            <input type="number" name="telefono" id="telefono" class="form-control">
                         </div>
                         <div class="form-group">
                             <label for="email">Dirección:</label>
