@@ -7,6 +7,10 @@ Route::get('/personas', function () {
     return view('personas.index');
 });
 
+Route::get('/personas/create', function () {
+    return view('personas.create');
+});
+
 Route::get('/dashboard', function () {
     return view('dashboard');
 })->middleware(['auth', 'verified'])->name('dashboard');
