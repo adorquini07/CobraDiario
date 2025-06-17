@@ -1,11 +1,11 @@
 @extends('layouts.main')
 @section('contenidossss')
-<div class="container">
+<div class="container"><br>
     <div class="row">
         <div class="col-md-12">
             <div class="card">
                 <div class="card-header">
-                    Personas
+                    Listado de Personas
                     <a href="{{ route('personas.create') }}" class="btn btn-success btn-sm float-end">Crear Persona</a>
                 </div>
                 <div class="card-body">
