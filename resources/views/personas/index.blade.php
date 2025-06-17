@@ -16,7 +16,7 @@
                     @endif
                     <table class="table table-bordered table-sm">
                         <thead>
-                            <tr>
+                            <tr class="text-center">
                                 <th>Nombre</th>
                                 <th>Apellido</th>
                                 <th>Cédula</th>
@@ -27,7 +27,7 @@
                         </thead>
                         <tbody>
                             @foreach ($personas as $persona)
-                            <tr>
+                            <tr class="text-center">
                                 <td>{{ $persona->nombre }}</td>
                                 <td>{{ $persona->apellido }}</td>
                                 <td>{{ $persona->nuip }}</td>
