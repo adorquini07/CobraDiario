@@ -28,6 +28,12 @@ Route::post('/personas', function (StorePersonaRequest $request) {
     return redirect()->route('personas.index')->with('info', 'Persona creada exitosamente');
 })->name('personas.store');
 
+Route::delete('/personas/{id}', function (int $id) {
+    $persona = Persona::findOrFail($id);
+    $persona->delete();
+    return redirect()->route('personas.index')->with('info', 'Persona eliminada exitosamente');
+})->name('personas.destroy');
+
 Route::middleware('auth')->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');

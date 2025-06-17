@@ -33,6 +33,13 @@
                                 <td>{{ $persona->nuip }}</td>
                                 <td>{{ $persona->telefono }}</td>
                                 <td>{{ $persona->direccion }}</td>
+                                <td>
+                                    <form action="{{ route('personas.destroy', $persona->id) }}" method="POST">
+                                        @csrf
+                                        @method('delete')
+                                        <button type="submit" class="btn btn-danger btn-sm">Eliminar</button>
+                                    </form>
+                                </td>
                             </tr>
                             @endforeach
                         </tbody>
