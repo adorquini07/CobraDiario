@@ -25,8 +25,8 @@ class StorePersonaRequest extends FormRequest
             'nombre' => 'required|string|max:255',
             'apellido' => 'required|string|max:255',
             'nuip' => 'required|integer|unique:personas,nuip',
-            'telefono' => 'required|integer',
             'direccion' => 'required|string|max:255',
+            'telefono' => 'required|integer|digits:10',
         ];
     }
 
@@ -44,6 +44,7 @@ class StorePersonaRequest extends FormRequest
             'nuip.unique' => 'El número de identificación ya existe',
             'telefono.required' => 'El celular es requerido',
             'telefono.integer' => 'El celular debe ser un número',
+            'telefono.digits' => 'El celular debe tener 10 dígitos',
             'direccion.required' => 'La dirección es requerida',
             'direccion.string' => 'La dirección debe ser una cadena de texto',
             'direccion.max' => 'La dirección debe tener menos de 255 caracteres',
