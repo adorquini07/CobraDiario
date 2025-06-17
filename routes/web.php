@@ -34,6 +34,18 @@ Route::delete('/personas/{id}', function (int $id) {
     return redirect()->route('personas.index')->with('info', 'Persona eliminada exitosamente');
 })->name('personas.destroy');
 
+Route::get('/personas/edit/{id}', function (int $id) {
+    $persona = Persona::findOrFail($id);
+    return view('personas.edit', compact('persona'));
+})->name('personas.edit');
+
+Route::put('/personas/{id}', function (int $id, StorePersonaRequest $request) {
+    $persona = Persona::findOrFail($id);
+    $persona->fill($request->validated());
+    $persona->save();
+    return redirect()->route('personas.index')->with('info', 'Persona actualizada exitosamente');
+})->name('personas.update');
+
 Route::middleware('auth')->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');

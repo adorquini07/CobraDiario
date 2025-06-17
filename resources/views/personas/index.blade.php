@@ -33,7 +33,8 @@
                                 <td>{{ $persona->nuip }}</td>
                                 <td>{{ $persona->telefono }}</td>
                                 <td>{{ $persona->direccion }}</td>
-                                <td>
+                                <td class="d-flex justify-content-center gap-2">
+                                    <a href="{{ route('personas.edit', $persona->id) }}" class="btn btn-warning btn-sm">Editar</a>
                                     <form action="{{ route('personas.destroy', $persona->id) }}" method="POST">
                                         @csrf
                                         @method('delete')
