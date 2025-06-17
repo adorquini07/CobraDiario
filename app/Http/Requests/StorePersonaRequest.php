@@ -21,13 +21,19 @@ class StorePersonaRequest extends FormRequest
      */
     public function rules(): array
     {
-        return [
+        $rules = [
             'nombre' => 'required|string|max:255',
             'apellido' => 'required|string|max:255',
-            'nuip' => 'required|integer|unique:personas,nuip',
+            'nuip' => 'required|integer',
             'direccion' => 'required|string|max:255',
             'telefono' => 'required|integer|digits:10',
         ];
+
+        if ($this->isMethod('post')) {
+            $rules['nuip'] .= '|unique:personas,nuip';
+        }
+
+        return $rules;
     }
 
     public function messages(): array
