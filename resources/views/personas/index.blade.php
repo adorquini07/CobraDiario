@@ -26,7 +26,7 @@
                             </tr>
                         </thead>
                         <tbody>
-                            @foreach ($personas as $persona)
+                            @forelse ($personas as $persona)
                             <tr class="text-center">
                                 <td>{{ $persona->nombre }}</td>
                                 <td>{{ $persona->apellido }}</td>
@@ -42,7 +42,11 @@
                                     </form>
                                 </td>
                             </tr>
-                            @endforeach
+                            @empty
+                            <tr>
+                                <td colspan="6" class="text-center">No hay personas</td>
+                            </tr>
+                            @endforelse
                         </tbody>
                     </table>
                 </div>

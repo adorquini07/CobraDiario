@@ -2,8 +2,7 @@
 
 use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Route;
-use App\Http\Requests\StorePersonaRequest;
-use App\Models\Persona;
+use App\Http\Controllers\PersonaController;
 
 
 
@@ -11,49 +10,24 @@ Route::get('/', function () {
     return view('auth.login');
 });
 
-Route::get('/dashboard', function () {
-    return view('dashboard');
-})->middleware(['auth', 'verified'])->name('dashboard');
+// Route::get('/dashboard', function () {
+//     return view('dashboard');
+// })->middleware(['auth', 'verified'])->name('dashboard');
 
 Route::middleware('auth')->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 
-    Route::get('/personas', function () {
-        $personas = Persona::all();
-        return view('personas.index', compact('personas'));
-    })->name('personas.index');
-    
-    Route::get('/personas/create', function () {
-        return view('personas.create');
-    })->name('personas.create');
-    
-    Route::post('/personas', function (StorePersonaRequest $request) {
-        $validated = $request->validated();
-        $model = new Persona();
-        $model->fill($validated);
-        $model->save();
-        return redirect()->route('personas.index')->with('info', 'Persona creada exitosamente');
-    })->name('personas.store');
-    
-    Route::delete('/personas/{id}', function (int $id) {
-        $persona = Persona::findOrFail($id);
-        $persona->delete();
-        return redirect()->route('personas.index')->with('info', 'Persona eliminada exitosamente');
-    })->name('personas.destroy');
-    
-    Route::get('/personas/edit/{id}', function (int $id) {
-        $persona = Persona::findOrFail($id);
-        return view('personas.edit', compact('persona'));
-    })->name('personas.edit');
-    
-    Route::put('/personas/{id}', function (int $id, StorePersonaRequest $request) {
-        $persona = Persona::findOrFail($id);
-        $persona->fill($request->validated());
-        $persona->save();
-        return redirect()->route('personas.index')->with('info', 'Persona actualizada exitosamente');
-    })->name('personas.update');
+    Route::prefix('personas')->controller(PersonaController::class)->name('personas.')->group(function () {
+        Route::get('/', 'index')->name('index');
+        Route::get('/create', 'create')->name('create');
+        Route::post('/', 'store')->name('store');
+        Route::get('/{id}', 'show')->name('show');
+        Route::get('/edit/{id}', 'edit')->name('edit');
+        Route::put('/{id}', 'update')->name('update');
+        Route::delete('/{id}', 'destroy')->name('destroy');
+    });
 });
 
 require __DIR__ . '/auth.php';
