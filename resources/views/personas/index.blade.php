@@ -47,14 +47,16 @@
                     </table>
                 </div>
                 <div class="card-footer">
-                    Bienbenido {{ Auth::user()->name }}
-                    <form action="{{ route('logout') }}" method="POST">
-                        @csrf
-                        <button type="submit" class="btn btn-danger btn-sm float-end">Cerrar sesión</button>
-                    </form>
+                    <iv class="d-flex justify-content-between">
+                        Bienvenido {{ Auth::user()->name }}
+                        <form action="{{ route('logout') }}" method="POST">
+                            @csrf
+                            <button type="submit" class="btn btn-danger btn-sm float-end">Cerrar sesión</button>
+                        </form>
                 </div>
             </div>
         </div>
     </div>
+</div>
 </div>
 @endsection
