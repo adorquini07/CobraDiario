@@ -1,4 +1,5 @@
 @extends('layouts.main')
+@section('title', 'Editar Persona')
 @section('contenidossss')
 <div class="container"><br>
     <div class="row">
