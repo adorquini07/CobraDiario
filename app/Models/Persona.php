@@ -19,4 +19,9 @@ class Persona extends Model
     protected $table = 'personas';
 
     protected $fillable = ['nombre', 'apellido', 'nuip', 'telefono', 'direccion'];
+
+    public function prestamos()
+    {
+        return $this->hasMany(Prestamo::class, 'id_persona', 'id');
+    }
 }
