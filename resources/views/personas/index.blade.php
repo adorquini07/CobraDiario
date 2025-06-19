@@ -1,12 +1,18 @@
 @extends('layouts.main')
+@section('title', 'Personas')
 @section('contenidossss')
 <div class="container"><br>
     <div class="row">
         <div class="col-md-12">
             <div class="card">
                 <div class="card-header">
-                    Listado de Personas
-                    <a href="{{ route('personas.create') }}" class="btn btn-success btn-sm float-end">Crear Persona</a>
+                    <div class="d-flex justify-content-between">
+                        Listado de Personas
+                        <div class="d-flex justify-content-end gap-2">
+                            <a href="{{ route('personas.create') }}" class="btn btn-success btn-sm float-end">Crear Persona</a>
+                            <a href="{{ route('prestamos.index') }}" class="btn btn-primary btn-sm float-end">Prestamos</a>
+                        </div>
+                    </div>
                 </div>
                 <div class="card-body">
                     @if (session('info'))
