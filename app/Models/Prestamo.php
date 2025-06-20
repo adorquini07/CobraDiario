@@ -17,6 +17,8 @@ use Illuminate\Database\Eloquent\Model;
  * @property string $updated_at
  *
  * @property Persona $persona
+ *
+ * @property string $dias_apagar
  */
 class Prestamo extends Model
 {
@@ -41,6 +43,9 @@ class Prestamo extends Model
     public function diasApagar()
     {
         $dias = json_decode($this->dias_apagar);
+        if (count($dias) == 7) {
+            return 'Todos los días';
+        }
         return implode(', ', $dias);
     }
 }
