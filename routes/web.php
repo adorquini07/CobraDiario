@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\PagoController;
 use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\PersonaController;
@@ -31,6 +32,16 @@ Route::middleware('auth')->group(function () {
     Route::prefix('prestamos')->controller(PrestamoController::class)->name('prestamos.')->group(function () {
         Route::get('/', 'index')->name('index');
         Route::get('/create', 'create')->name('create');
+        Route::post('/', 'store')->name('store');
+        Route::get('/{id}', 'show')->name('show');
+        Route::get('/edit/{id}', 'edit')->name('edit');
+        Route::put('/{id}', 'update')->name('update');
+        Route::delete('/{id}', 'destroy')->name('destroy');
+    });
+
+    Route::prefix('pagos')->controller(PagoController::class)->name('pagos.')->group(function () {
+        Route::get('/', 'index')->name('index');
+        Route::get('/create/{id_prestamo}', 'create')->name('create');
         Route::post('/', 'store')->name('store');
         Route::get('/{id}', 'show')->name('show');
         Route::get('/edit/{id}', 'edit')->name('edit');

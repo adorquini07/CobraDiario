@@ -20,7 +20,7 @@
                         {{ session('info') }}
                     </div>
                     @endif
-                    
+
                     <!-- Vista de escritorio (tabla) -->
                     <div class="d-none d-lg-block">
                         <div class="table-responsive">
@@ -31,6 +31,7 @@
                                         <th>Monto Prestado</th>
                                         <th>Monto a Pagar</th>
                                         <th>Cuota</th>
+                                        <th>Abonado</th>
                                         <th>Fecha de Prestamo</th>
                                         <th>Días a Pagar</th>
                                         <th>Estado</th>
@@ -44,16 +45,17 @@
                                         <td>{{ number_format($prestamo->monto_prestado, 0, ',', '.') }}</td>
                                         <td>{{ number_format($prestamo->monto_apagar, 0, ',', '.') }}</td>
                                         <td>{{ number_format($prestamo->cuota, 0, ',', '.') }}</td>
+                                        <td>{{ number_format($prestamo->abonado, 0, ',', '.') }}</td>
                                         <td>{{ $prestamo->fecha_prestamo }}</td>
                                         <td>{{ $prestamo->diasApagar() }}</td>
                                         <td>
                                             <span class="badge {{ $prestamo->estado ? 'bg-success' : 'bg-secondary' }}">
-                                                {{ $prestamo->estado ? 'Activo' : 'Inactivo' }}
+                                                {{ $prestamo->estado ? 'Activo' : 'Pagado' }}
                                             </span>
                                         </td>
                                         <td>
                                             <div class="d-flex justify-content-center gap-1 flex-wrap">
-                                                <button class="btn btn-success btn-sm" onclick="mostrarAlerta()">Abonar</button>
+                                                <a href="{{ route('pagos.create', $prestamo->id) }}" class="btn btn-success btn-sm">Abonar</a>
                                                 <a href="{{ route('prestamos.edit', $prestamo->id) }}" class="btn btn-warning btn-sm">Editar</a>
                                                 <form action="{{ route('prestamos.destroy', $prestamo->id) }}" method="POST" class="d-inline">
                                                     @csrf
@@ -96,29 +98,35 @@
                                         <div class="fw-bold">${{ number_format($prestamo->cuota, 0, ',', '.') }}</div>
                                     </div>
                                     <div class="col-6">
-                                        <small class="text-muted">Días a Pagar:</small>
-                                        <div class="fw-bold">{{ $prestamo->diasApagar() }}</div>
+                                        <small class="text-muted">Abonado:</small>
+                                        <div class="fw-bold">${{ number_format($prestamo->abonado, 0, ',', '.') }}</div>
                                     </div>
                                 </div>
                                 <div class="row mt-2">
                                     <div class="col-6">
+                                        <small class="text-muted">Días a Pagar:</small>
+                                        <div class="fw-bold">{{ $prestamo->diasApagar() }}</div>
+                                    </div>
+                                    <div class="col-6">
                                         <small class="text-muted">Fecha:</small>
                                         <div class="fw-bold">{{ $prestamo->fecha_prestamo }}</div>
                                     </div>
+                                </div>
+                                <div class="row mt-2">
                                     <div class="col-6">
                                         <small class="text-muted">Estado:</small>
                                         <div>
                                             <span class="badge {{ $prestamo->estado ? 'bg-success' : 'bg-secondary' }}">
-                                                {{ $prestamo->estado ? 'Activo' : 'Inactivo' }}
+                                                {{ $prestamo->estado ? 'Activo' : 'Pagado' }}
                                             </span>
                                         </div>
                                     </div>
                                 </div>
                                 <div class="mt-3">
                                     <div class="d-grid gap-2 d-md-flex">
-                                        <button class="btn btn-success btn-sm flex-fill" onclick="mostrarAlerta()">
+                                        <a href="{{ route('pagos.create', $prestamo->id) }}" class="btn btn-success btn-sm flex-fill">
                                             <i class="fas fa-money-bill-wave"></i> Abonar
-                                        </button>
+                                        </a>
                                         <a href="{{ route('prestamos.edit', $prestamo->id) }}" class="btn btn-warning btn-sm flex-fill">
                                             <i class="fas fa-edit"></i> Editar
                                         </a>
@@ -155,23 +163,3 @@
     </div>
 </div>
 @endsection
-
-@push('scripts')
-<script>
-    function mostrarAlerta() {
-        Swal.fire({
-            title: "La Persona dio la cuota de abono",
-            showDenyButton: true,
-            showCancelButton: false,
-            confirmButtonText: "Si, dio la cuota",
-            denyButtonText: `No, no dio la cuota acordada`
-        }).then((result) => {
-            if (result.isConfirmed) {
-                Swal.fire("Saved!", "", "success");
-            } else if (result.isDenied) {
-                Swal.fire("Changes are not saved", "", "info");
-            }
-        });
-    }
-</script>
-@endpush
