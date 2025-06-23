@@ -55,7 +55,7 @@ class Prestamo extends Model
     public function diasApagar()
     {
         $dias = json_decode($this->dias_apagar);
-        if (count($dias) == 7) {
+        if (count($dias) == 6) {
             return 'Todos los días';
         }
         return implode(', ', $dias);
