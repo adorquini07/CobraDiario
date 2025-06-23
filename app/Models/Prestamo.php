@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Model;
 
 /**
@@ -21,6 +22,9 @@ use Illuminate\Database\Eloquent\Model;
  * @property Pago[] $pagos
  *
  * @property string $dias_apagar
+ * @property int $RecogerHoy
+ * @property int $CobrarHoy
+ * @property boolean $pagoHoy
  */
 class Prestamo extends Model
 {
@@ -68,5 +72,29 @@ class Prestamo extends Model
         }
         $pago->prestamo->save();
         return $pago;
+    }
+
+    public static function CobrarHoy()
+    {
+        $diaActual = Carbon::now()->locale('es')->dayName;
+        $diaActual = ucfirst($diaActual);
+        return self::whereRaw('JSON_CONTAINS(dias_apagar, ?)', ['["' . $diaActual . '"]'])->where('estado', true)->get();
+    }
+
+    public static function RecogerHoy(): int
+    {
+        $prestamos = self::CobrarHoy();
+        
+        $coutas = 0;
+        foreach ($prestamos as $prestamo) {
+            $coutas += $prestamo->cuota;
+        }
+       
+        return $coutas;
+    }
+
+    public function getPagoHoy()
+    {
+        return Pago::where('id_prestamo', $this->id)->where('fecha_pago', date('Y-m-d'))->exists();
     }
 }

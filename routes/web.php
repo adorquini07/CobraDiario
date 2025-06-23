@@ -43,7 +43,7 @@ Route::middleware('auth')->group(function () {
         Route::get('/', 'index')->name('index');
         Route::get('/create/{id_prestamo}', 'create')->name('create');
         Route::post('/', 'store')->name('store');
-        Route::get('/{id}', 'show')->name('show');
+        Route::get('/show', 'show')->name('show');
         Route::get('/edit/{id}', 'edit')->name('edit');
         Route::put('/{id}', 'update')->name('update');
         Route::delete('/{id}', 'destroy')->name('destroy');

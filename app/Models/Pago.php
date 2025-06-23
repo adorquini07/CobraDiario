@@ -16,6 +16,8 @@ use Illuminate\Database\Eloquent\Model;
  *
  * @property Prestamo $prestamo
  * @property Persona $persona
+ *
+ * @property float $abonadoHoy
  */
 class Pago extends Model
 {
@@ -30,5 +32,10 @@ class Pago extends Model
     public function persona()
     {
         return $this->belongsTo(Persona::class, 'id_persona');
+    }
+
+    public static function getAbonadoHoy()
+    {
+        return self::where('fecha_pago', date('Y-m-d'))->sum('monto_pagado');
     }
 }

@@ -38,9 +38,10 @@ class PagoController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(Pago $pago)
+    public function show()
     {
-        //
+        $cobrarHoy = Prestamo::CobrarHoy();
+        return view('pagos.show', compact('cobrarHoy'));
     }
 
     /**
