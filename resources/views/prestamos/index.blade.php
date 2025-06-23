@@ -10,7 +10,6 @@
                         <h5 class="mb-0">Listado de Prestamos</h5>
                         <div class="d-flex justify-content-end gap-2 flex-wrap">
                             <a href="{{ route('prestamos.create') }}" class="btn btn-success btn-sm">Crear Prestamo</a>
-                            <a href="{{ route('personas.index') }}" class="btn btn-primary btn-sm">Personas</a>
                         </div>
                     </div>
                 </div>
@@ -154,15 +153,6 @@
                             <p class="text-muted">No hay prestamos registrados</p>
                         </div>
                         @endforelse
-                    </div>
-                </div>
-                <div class="card-footer">
-                    <div class="d-flex justify-content-between align-items-center flex-wrap gap-2">
-                        <small class="text-muted">Bienvenido {{ Auth::user()->name }}</small>
-                        <form action="{{ route('logout') }}" method="POST">
-                            @csrf
-                            <button type="submit" class="btn btn-danger btn-sm">Cerrar sesión</button>
-                        </form>
                     </div>
                 </div>
             </div>

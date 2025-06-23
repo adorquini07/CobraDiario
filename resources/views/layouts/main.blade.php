@@ -77,6 +77,12 @@
                                 Préstamos
                             </a>
                         </li>
+                        <li class="nav-item">
+                            <a class="nav-link text-light {{ request()->routeIs('pagos.show') ? 'active' : '' }}" href="{{ route('pagos.show') }}">
+                                <i class="fas fa-hand-holding-usd me-1"></i>
+                                Cobros hoy
+                            </a>
+                        </li>
                     </ul>
                     
                     <div class="navbar-nav">

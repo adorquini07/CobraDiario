@@ -10,7 +10,6 @@
                         <h5 class="mb-0">Listado de Personas</h5>
                         <div class="d-flex justify-content-end gap-2 flex-wrap">
                             <a href="{{ route('personas.create') }}" class="btn btn-success btn-sm">Crear Persona</a>
-                            <a href="{{ route('prestamos.index') }}" class="btn btn-primary btn-sm">Prestamos</a>
                         </div>
                     </div>
                 </div>
@@ -110,15 +109,6 @@
                             <p class="text-muted">No hay personas registradas</p>
                         </div>
                         @endforelse
-                    </div>
-                </div>
-                <div class="card-footer">
-                    <div class="d-flex justify-content-between align-items-center flex-wrap gap-2">
-                        <small class="text-muted">Bienvenido {{ Auth::user()->name }}</small>
-                        <form action="{{ route('logout') }}" method="POST">
-                            @csrf
-                            <button type="submit" class="btn btn-danger btn-sm">Cerrar sesión</button>
-                        </form>
                     </div>
                 </div>
             </div>
