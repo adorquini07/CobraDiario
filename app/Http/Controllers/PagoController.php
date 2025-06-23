@@ -44,6 +44,15 @@ class PagoController extends Controller
         return view('pagos.show', compact('cobrarHoy'));
     }
 
+    public function showResumen()
+    {
+        $abonadoHoy = Pago::getAbonadoHoy();
+        $recogerHoy = Prestamo::RecogerHoy();
+        $cobrarHoy = Prestamo::CobrarHoy();
+
+        return view('pagos.resumen', compact('abonadoHoy', 'recogerHoy', 'cobrarHoy'));
+    }
+
     /**
      * Show the form for editing the specified resource.
      */
