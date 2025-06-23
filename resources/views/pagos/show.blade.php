@@ -12,9 +12,6 @@
                     </div>
                 </div>
                 <div class="card-body p-4">
-                    @php
-                    $cobrarHoy = \App\Models\Prestamo::CobrarHoy();
-                    @endphp
                     @if ($cobrarHoy->count())
                     <!-- Vista de escritorio (tabla) -->
                     <div class="d-none d-lg-block">
