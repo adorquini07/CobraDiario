@@ -45,11 +45,11 @@
                                         <td>{{ $persona->direccion }}</td>
                                         <td>
                                             <div class="d-flex justify-content-center gap-1 flex-wrap">
-                                                <a href="{{ route('personas.edit', $persona->id) }}" class="btn btn-warning btn-sm">Editar</a>
+                                                <a href="{{ route('personas.edit', $persona->id) }}" class="btn btn-warning btn-sm"><i class="fas fa-pencil-alt"></i></a>
                                                 <form action="{{ route('personas.destroy', $persona->id) }}" method="POST" class="d-inline">
                                                     @csrf
                                                     @method('delete')
-                                                    <button type="submit" class="btn btn-danger btn-sm" onclick="return confirm('¿Estás seguro de eliminar esta persona?')">Eliminar</button>
+                                                    <button type="submit" class="btn btn-danger btn-sm" onclick="return confirm('¿Estás seguro de eliminar esta persona?')"><i class="fas fa-trash-alt"></i></button>
                                                 </form>
                                             </div>
                                         </td>

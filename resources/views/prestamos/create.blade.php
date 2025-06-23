@@ -126,7 +126,6 @@
                                     'Jueves' => 'Jueves',
                                     'Viernes' => 'Viernes',
                                     'Sábado' => 'Sábado',
-                                    'Domingo' => 'Domingo',
                                 ];
                                 $seleccionados = old('dias_apagar', []);
                                 @endphp
@@ -141,7 +140,7 @@
                                                id="dia_{{ $valor }}"
                                                {{ in_array($valor, $seleccionados) ? 'checked' : '' }}>
                                         <label class="form-check-label" for="dia_{{ $valor }}">
-                                            <i class="fas fa-check-circle me-1"></i>{{ $dia }}
+                                            {{ $dia }}
                                         </label>
                                     </div>
                                 </div>
