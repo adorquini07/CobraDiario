@@ -55,12 +55,15 @@
                                         </td>
                                         <td>
                                             <div class="d-flex justify-content-center gap-1 flex-wrap">
-                                                <a href="{{ route('pagos.create', $prestamo->id) }}" class="btn btn-success btn-sm">Abonar</a>
-                                                <a href="{{ route('prestamos.edit', $prestamo->id) }}" class="btn btn-warning btn-sm">Editar</a>
+                                                <a href="{{ route('prestamos.show', $prestamo->id) }}" class="btn btn-info btn-sm"><i class="fas fa-eye"></i></a>
+                                                @if ($prestamo->estado)
+                                                <a href="{{ route('pagos.create', $prestamo->id) }}" class="btn btn-success btn-sm"><i class="fas fa-money-bill-wave"></i></a>
+                                                @endif
+                                                <a href="{{ route('prestamos.edit', $prestamo->id) }}" class="btn btn-warning btn-sm"><i class="fas fa-pencil-alt"></i></a>
                                                 <form action="{{ route('prestamos.destroy', $prestamo->id) }}" method="POST" class="d-inline">
                                                     @csrf
                                                     @method('delete')
-                                                    <button type="submit" class="btn btn-danger btn-sm" onclick="return confirm('¿Estás seguro de eliminar este préstamo?')">Eliminar</button>
+                                                    <button type="submit" class="btn btn-danger btn-sm" onclick="return confirm('¿Estás seguro de eliminar este préstamo?')"><i class="fas fa-trash-alt"></i></button>
                                                 </form>
                                             </div>
                                         </td>
@@ -124,9 +127,13 @@
                                 </div>
                                 <div class="mt-3">
                                     <div class="d-grid gap-2 d-md-flex">
+                                        <a href="{{ route('prestamos.show', $prestamo->id) }}" class="btn btn-info btn-sm flex-fill">Ver Detalle</a>
+                                        @if ($prestamo->estado)
                                         <a href="{{ route('pagos.create', $prestamo->id) }}" class="btn btn-success btn-sm flex-fill">
                                             <i class="fas fa-money-bill-wave"></i> Abonar
+
                                         </a>
+                                        @endif
                                         <a href="{{ route('prestamos.edit', $prestamo->id) }}" class="btn btn-warning btn-sm flex-fill">
                                             <i class="fas fa-edit"></i> Editar
                                         </a>

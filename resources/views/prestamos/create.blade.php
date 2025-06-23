@@ -81,9 +81,9 @@
                                 </label>
                                 <div class="input-group">
                                     <span class="input-group-text">$</span>
-                                    <input type="number" 
-                                           name="cuota" 
-                                           id="cuota" 
+                                    <input type="number"
+                                           name="cuota"
+                                           id="cuota"
                                            class="form-control @error('cuota') is-invalid @enderror"
                                            value="{{ old('cuota') }}"
                                            placeholder="Ingresa la cuota"
@@ -100,9 +100,9 @@
                                 <label for="fecha_prestamo" class="form-label">
                                     <i class="fas fa-calendar me-1"></i>Fecha de Préstamo
                                 </label>
-                                <input type="date" 
-                                       name="fecha_prestamo" 
-                                       id="fecha_prestamo" 
+                                <input type="date"
+                                       name="fecha_prestamo"
+                                       id="fecha_prestamo"
                                        class="form-control @error('fecha_prestamo') is-invalid @enderror"
                                        value="{{ old('fecha_prestamo', date('Y-m-d')) }}"
                                        required>

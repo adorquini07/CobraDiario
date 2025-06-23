@@ -13,7 +13,7 @@
         <!-- Scripts de Bootstrap y SweetAlert2 -->
         <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
         <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
-        
+        <script src="https://kit.fontawesome.com/c4ec8bf8b9.js" crossorigin="anonymous"></script>
         @stack('scripts')
     </body>
 </html>

@@ -41,7 +41,7 @@
                                     name="monto_pagado"
                                     id="monto_pagado"
                                     class="form-control @error('monto_pagado') is-invalid @enderror"
-                                    value="{{ old('monto_pagado') }}"
+                                    value="{{ $prestamo->cuota }}"
                                     placeholder="Ingresa el monto abonado"
                                     required>
                                 @error('monto_pagado')
