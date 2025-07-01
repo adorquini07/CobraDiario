@@ -31,6 +31,7 @@
                                         <th>Monto a Pagar</th>
                                         <th>Cuota</th>
                                         <th>Abonado</th>
+                                        <th>Debe</th>
                                         <th>Fecha de Prestamo</th>
                                         <th>Días a Pagar</th>
                                         <th>Estado</th>
@@ -45,6 +46,7 @@
                                         <td>{{ number_format($prestamo->monto_apagar, 0, ',', '.') }}</td>
                                         <td>{{ number_format($prestamo->cuota, 0, ',', '.') }}</td>
                                         <td>{{ number_format($prestamo->abonado, 0, ',', '.') }}</td>
+                                        <td>{{ number_format(($prestamo->monto_apagar - $prestamo->abonado), 0, ',', '.') }}</td>
                                         <td>{{ $prestamo->fecha_prestamo }}</td>
                                         <td>{{ $prestamo->diasApagar() }}</td>
                                         <td>
@@ -106,15 +108,19 @@
                                 </div>
                                 <div class="row mt-2">
                                     <div class="col-6">
+                                        <small class="text-muted">Debe:</small>
+                                        <div class="fw-bold">${{ number_format(($prestamo->monto_apagar - $prestamo->abonado), 0, ',', '.') }}</div>
+                                    </div>
+                                    <div class="col-6">
                                         <small class="text-muted">Días a Pagar:</small>
                                         <div class="fw-bold">{{ $prestamo->diasApagar() }}</div>
                                     </div>
+                                </div>
+                                <div class="row mt-2">
                                     <div class="col-6">
                                         <small class="text-muted">Fecha:</small>
                                         <div class="fw-bold">{{ $prestamo->fecha_prestamo }}</div>
                                     </div>
-                                </div>
-                                <div class="row mt-2">
                                     <div class="col-6">
                                         <small class="text-muted">Estado:</small>
                                         <div>
