@@ -78,7 +78,12 @@ class Prestamo extends Model
     {
         $diaActual = Carbon::now()->locale('es')->dayName;
         $diaActual = ucfirst($diaActual);
-        return self::whereRaw('JSON_CONTAINS(dias_apagar, ?)', ['["' . $diaActual . '"]'])->where('estado', true)->get();
+        return self::whereRaw('JSON_CONTAINS(dias_apagar, ?)', ['["' . $diaActual . '"]'])
+            ->where('estado', true)
+            ->whereDoesntHave('pagos', function($query) {
+                $query->whereDate('fecha_pago', date('Y-m-d'));
+            })
+            ->get();
     }
 
     public static function RecogerHoy(): int
