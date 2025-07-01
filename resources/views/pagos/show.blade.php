@@ -23,6 +23,7 @@
                                         <th>Celular</th>
                                         <th>Dirección</th>
                                         <th>Cuota</th>
+                                        <th>Debe</th>
                                         <th>Estado</th>
                                         <th>Acciones</th>
                                     </tr>
@@ -34,6 +35,7 @@
                                         <td>{{ $prestamo->persona->telefono }}</td>
                                         <td>{{ $prestamo->persona->direccion }}</td>
                                         <td>${{ number_format($prestamo->cuota, 0, ',', '.') }}</td>
+                                        <td>${{ number_format(($prestamo->monto_apagar - $prestamo->abonado), 0, ',', '.') }}</td>
                                         <td>
                                             <span class="badge {{ $prestamo->estado ? 'bg-success' : 'bg-secondary' }}">
                                                 {{ $prestamo->estado ? 'Activo' : 'Pagado' }}
@@ -74,6 +76,12 @@
                                         <small class="text-muted">Cuota:</small>
                                         <div class="fw-bold">${{ number_format($prestamo->cuota, 0, ',', '.') }}</div>
                                     </div>
+                                    <div class="col-6">
+                                        <small class="text-muted">Debe:</small>
+                                        <div class="fw-bold">${{ number_format(($prestamo->monto_apagar - $prestamo->abonado), 0, ',', '.') }}</div>
+                                    </div>
+                                </div>
+                                <div class="row mt-2">
                                     <div class="col-6">
                                         <small class="text-muted">Estado:</small>
                                         <div>
