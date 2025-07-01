@@ -77,10 +77,12 @@
                                     class="form-control @error('nuip') is-invalid @enderror"
                                     value="{{ old('nuip', $persona->nuip) }}"
                                     placeholder="Ingresa el número de cédula"
+                                    disabled
                                     required>
                                 @error('nuip')
                                 <div class="invalid-feedback">{{ $message }}</div>
                                 @enderror
+                                <input type="hidden" name="nuip" value="{{ $persona->nuip }}">
                             </div>
 
                             <div class="col-md-6 mb-3">
@@ -100,6 +102,17 @@
                             </div>
                         </div>
 
+                        <!-- Barrio -->
+
+                        <div class="mb-4">
+                            <label for="barrio" class="form-label">
+                                <i class="fas fa-map-marker-alt me-1"></i>Barrio
+                            </label>
+                            <input type="text" name="barrio" id="barrio" class="form-control @error('barrio') is-invalid @enderror" value="{{ old('barrio', $persona->barrio) }}" placeholder="Ingresa el barrio" required>
+                            @error('barrio')
+                            <div class="invalid-feedback">{{ $message }}</div>
+                            @enderror
+                        </div>
                         <!-- Dirección -->
                         <div class="mb-4">
                             <label for="direccion" class="form-label">

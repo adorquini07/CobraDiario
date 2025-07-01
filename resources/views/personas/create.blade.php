@@ -99,6 +99,18 @@
                             </div>
                         </div>
 
+                        <!-- Barrio -->
+
+                        <div class="mb-4">
+                            <label for="barrio" class="form-label">
+                                <i class="fas fa-map-marker-alt me-1"></i>Barrio
+                            </label>
+                            <input type="text" name="barrio" id="barrio" class="form-control @error('barrio') is-invalid @enderror" value="{{ old('barrio') }}" placeholder="Ingresa el barrio" required>
+                            @error('barrio')
+                            <div class="invalid-feedback">{{ $message }}</div>
+                            @enderror
+                        </div>
+
                         <!-- Dirección -->
                         <div class="mb-4">
                             <label for="direccion" class="form-label">

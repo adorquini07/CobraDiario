@@ -11,6 +11,7 @@ use Illuminate\Database\Eloquent\Model;
  * @property int $nuip
  * @property string $telefono
  * @property string $direccion
+ * @property string $barrio
  * @property string $created_at
  * @property string $updated_at
  */
@@ -18,7 +19,7 @@ class Persona extends Model
 {
     protected $table = 'personas';
 
-    protected $fillable = ['nombre', 'apellido', 'nuip', 'telefono', 'direccion'];
+    protected $fillable = ['nombre', 'apellido', 'nuip', 'telefono', 'direccion', 'barrio'];
 
     public function prestamos()
     {

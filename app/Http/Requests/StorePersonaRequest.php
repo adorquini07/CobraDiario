@@ -26,6 +26,7 @@ class StorePersonaRequest extends FormRequest
             'apellido' => 'required|string|max:255',
             'nuip' => 'required|integer',
             'direccion' => 'required|string|max:255',
+            'barrio' => 'required|string|max:255',
             'telefono' => 'required|integer|digits:10',
         ];
 
@@ -54,6 +55,9 @@ class StorePersonaRequest extends FormRequest
             'direccion.required' => 'La dirección es requerida',
             'direccion.string' => 'La dirección debe ser una cadena de texto',
             'direccion.max' => 'La dirección debe tener menos de 255 caracteres',
+            'barrio.required' => 'El barrio es requerido',
+            'barrio.string' => 'El barrio debe ser una cadena de texto',
+            'barrio.max' => 'El barrio debe tener menos de 255 caracteres',
         ];
     }
 }

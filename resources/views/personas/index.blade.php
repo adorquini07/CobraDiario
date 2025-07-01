@@ -31,6 +31,7 @@
                                         <th><i class="fas fa-id-card"></i> Cédula</th>
                                         <th><i class="fas fa-mobile-alt"></i> Celular</th>
                                         <th><i class="fas fa-map-marker-alt"></i> Dirección</th>
+                                        <th><i class="fas fa-map-marker-alt"></i> Barrio</th>
                                         <th><i class="fas fa-cogs"></i> Acciones</th>
                                     </tr>
                                 </thead>
@@ -42,6 +43,7 @@
                                         <td><span class="badge bg-info text-dark">{{ $persona->nuip }}</span></td>
                                         <td><a href="tel:{{ $persona->telefono }}" class="text-decoration-none text-success"><i class="fas fa-phone-alt"></i> {{ $persona->telefono }}</a></td>
                                         <td><span class="text-secondary">{{ $persona->direccion }}</span></td>
+                                        <td><span class="text-secondary">{{ $persona->barrio }}</span></td>
                                         <td>
                                             <div class="d-flex justify-content-center gap-1 flex-wrap">
                                                 <a href="{{ route('personas.edit', $persona->id) }}" class="btn btn-warning btn-sm" title="Editar"><i class="fas fa-pencil-alt"></i></a>
@@ -81,10 +83,14 @@
                                         <div class="fw-bold">{{ $persona->telefono }}</div>
                                     </div>
                                 </div>
-                                <div class="row mt-2">
-                                    <div class="col-12">
+                                <div class="row">
+                                    <div class="col-6">
                                         <small class="text-muted">Dirección:</small>
                                         <div class="fw-bold">{{ $persona->direccion }}</div>
+                                    </div>
+                                    <div class="col-6">
+                                        <small class="text-muted">Barrio:</small>
+                                        <div class="fw-bold">{{ $persona->barrio }}</div>
                                     </div>
                                 </div>
                                 <div class="mt-3">

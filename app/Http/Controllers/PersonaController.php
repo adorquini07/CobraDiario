@@ -32,6 +32,7 @@ class PersonaController extends Controller
         $validated = $request->validated();
         $model = new Persona();
         $model->fill($validated);
+        $model->barrio = mb_strtoupper($model->barrio);
         assert($model->save());
         return redirect()->route('personas.index')->with('info', 'Persona creada exitosamente');
     }
@@ -61,6 +62,7 @@ class PersonaController extends Controller
         $validated = $request->validated();
         $persona = Persona::findOrFail($id);
         $persona->fill($validated);
+        $persona->barrio = mb_strtoupper($persona->barrio);
         assert($persona->save());
         return redirect()->route('personas.index')->with('info', 'Persona actualizada exitosamente');
     }

@@ -22,6 +22,7 @@
                                         <th>Persona</th>
                                         <th>Celular</th>
                                         <th>Dirección</th>
+                                        <th>Barrio</th>
                                         <th>Cuota</th>
                                         <th>Debe</th>
                                         <th>Estado</th>
@@ -34,6 +35,7 @@
                                         <td>{{ $prestamo->persona->nombre }} {{ $prestamo->persona->apellido }}</td>
                                         <td>{{ $prestamo->persona->telefono }}</td>
                                         <td>{{ $prestamo->persona->direccion }}</td>
+                                        <td>{{ $prestamo->persona->barrio }}</td>
                                         <td>${{ number_format($prestamo->cuota, 0, ',', '.') }}</td>
                                         <td>${{ number_format(($prestamo->monto_apagar - $prestamo->abonado), 0, ',', '.') }}</td>
                                         <td>
@@ -73,15 +75,19 @@
                                 </div>
                                 <div class="row mt-2">
                                     <div class="col-6">
+                                        <small class="text-muted">Barrio:</small>
+                                        <div class="fw-bold">{{ $prestamo->persona->barrio }}</div>
+                                    </div>
+                                    <div class="col-6">
                                         <small class="text-muted">Cuota:</small>
                                         <div class="fw-bold">${{ number_format($prestamo->cuota, 0, ',', '.') }}</div>
                                     </div>
+                                </div>
+                                <div class="row mt-2">
                                     <div class="col-6">
                                         <small class="text-muted">Debe:</small>
                                         <div class="fw-bold">${{ number_format(($prestamo->monto_apagar - $prestamo->abonado), 0, ',', '.') }}</div>
                                     </div>
-                                </div>
-                                <div class="row mt-2">
                                     <div class="col-6">
                                         <small class="text-muted">Estado:</small>
                                         <div>
