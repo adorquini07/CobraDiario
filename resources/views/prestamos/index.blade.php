@@ -55,7 +55,7 @@
                                         <td>
                                             <div class="d-flex justify-content-center gap-1 flex-wrap">
                                                 <a href="{{ route('prestamos.show', $prestamo->id) }}" class="btn btn-info btn-sm"><i class="fas fa-eye"></i></a>
-                                                @if ($prestamo->estado)
+                                                @if ($prestamo->estado && !$prestamo->getPagoHoy())
                                                 <a href="{{ route('pagos.create', $prestamo->id) }}" class="btn btn-success btn-sm"><i class="fas fa-money-bill-wave"></i></a>
                                                 @endif
                                                 <a href="{{ route('prestamos.edit', $prestamo->id) }}" class="btn btn-warning btn-sm"><i class="fas fa-pencil-alt"></i></a>
@@ -127,7 +127,7 @@
                                 <div class="mt-3">
                                     <div class="d-grid gap-2 d-md-flex">
                                         <a href="{{ route('prestamos.show', $prestamo->id) }}" class="btn btn-info btn-sm flex-fill">Ver Detalle</a>
-                                        @if ($prestamo->estado)
+                                        @if ($prestamo->estado && !$prestamo->getPagoHoy())
                                         <a href="{{ route('pagos.create', $prestamo->id) }}" class="btn btn-success btn-sm flex-fill">
                                             <i class="fas fa-money-bill-wave"></i> Abonar
 

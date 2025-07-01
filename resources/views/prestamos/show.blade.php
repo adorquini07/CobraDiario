@@ -51,7 +51,7 @@
                         </div>
                     </div>
                     <div class="d-flex gap-2 flex-wrap mt-3">
-                        @if ($prestamo->estado)
+                        @if ($prestamo->estado && !$prestamo->getPagoHoy())
                             <a href="{{ route('pagos.create', $prestamo->id) }}" class="btn btn-success btn-sm">
                                 <i class="fas fa-money-bill-wave"></i> Abonar
                             </a>
