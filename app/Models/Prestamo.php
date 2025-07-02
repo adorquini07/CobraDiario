@@ -77,26 +77,29 @@ class Prestamo extends Model
     public static function CobrarHoy()
     {
         $diaActual = Carbon::now()->locale('es')->dayName;
-        $diaActual = ucfirst(string: $diaActual);
+        $diaActual = ucfirst($diaActual);
+
         return self::whereRaw('JSON_CONTAINS(dias_apagar, ?)', ['["' . $diaActual . '"]'])
             ->where('estado', true)
-            ->whereDoesntHave('pagos', function($query) {
-                $query->whereDate('fecha_pago', date('Y-m-d'));
+            ->whereDoesntHave('pagos', function ($query) {
+                $query->whereDate('fecha_pago', Carbon::today());
             })
-            ->join('personas', 'prestamos.id_persona', '=', 'personas.id')
-            ->orderBy('personas.barrio')
-            ->get();
+            ->with(['persona' => function ($query) {
+                $query->orderBy('barrio');
+            }])
+            ->get()
+            ->sortBy('persona.barrio');
     }
 
     public static function RecogerHoy(): int
     {
         $prestamos = self::CobrarHoy();
-        
+
         $coutas = 0;
         foreach ($prestamos as $prestamo) {
             $coutas += $prestamo->cuota;
         }
-       
+
         return $coutas;
     }
 
