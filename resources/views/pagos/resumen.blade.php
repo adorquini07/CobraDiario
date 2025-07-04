@@ -85,6 +85,9 @@
                                             <th>Monto Prestado</th>
                                             <th>Cuota</th>
                                             <th>Abonado</th>
+                                            <th>Debe</th>
+                                            <th>Dirección</th>
+                                            <th>Barrio</th>
                                             <th>Estado</th>
                                             <th>Acciones</th>
                                         </tr>
@@ -106,6 +109,9 @@
                                             <td>${{ number_format($prestamo->monto_prestado, 0, ',', '.') }}</td>
                                             <td>${{ number_format($prestamo->cuota, 0, ',', '.') }}</td>
                                             <td>${{ number_format($prestamo->abonado, 0, ',', '.') }}</td>
+                                            <td>${{ number_format($prestamo->monto_apagar - $prestamo->abonado, 0, ',', '.') }}</td>
+                                            <td>{{ $prestamo->direccion }}</td>
+                                            <td>{{ $prestamo->barrio }}</td>
                                             <td>
                                                 @if($prestamo->getPagoHoy())
                                                     <span class="badge bg-success">
@@ -160,6 +166,18 @@
                                         <div class="col-6 mt-2">
                                             <small class="text-muted">Abonado:</small>
                                             <div class="fw-bold">${{ number_format($prestamo->abonado, 0, ',', '.') }}</div>
+                                        </div>
+                                        <div class="col-6 mt-2">
+                                            <small class="text-muted">Debe:</small>
+                                            <div class="fw-bold">${{ number_format($prestamo->monto_apagar - $prestamo->abonado, 0, ',', '.') }}</div>
+                                        </div>
+                                        <div class="col-6 mt-2">
+                                            <small class="text-muted">Dirección:</small>
+                                            <div class="fw-bold">{{ $prestamo->direccion }}</div>
+                                        </div>
+                                        <div class="col-6 mt-2">
+                                            <small class="text-muted">Barrio:</small>
+                                            <div class="fw-bold">{{ $prestamo->barrio }}</div>
                                         </div>
                                         <div class="col-6 mt-2">
                                             <small class="text-muted">Estado:</small>
@@ -222,6 +240,7 @@
                                             <th>Monto Pagado</th>
                                             <th>Hora</th>
                                             <th>Préstamo</th>
+                                            <th>Debe</th>
                                         </tr>
                                     </thead>
                                     <tbody>
@@ -241,6 +260,7 @@
                                             <td class="fw-bold text-success">${{ number_format($pago->monto_pagado, 0, ',', '.') }}</td>
                                             <td>{{ \Carbon\Carbon::parse($pago->created_at)->format('H:i') }}</td>
                                             <td>${{ number_format($pago->prestamo->monto_prestado, 0, ',', '.') }}</td>
+                                            <td>${{ number_format($pago->prestamo->monto_apagar - $pago->prestamo->abonado, 0, ',', '.') }}</td>
                                         </tr>
                                         @endforeach
                                     </tbody>
