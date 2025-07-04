@@ -19,5 +19,10 @@ class DatabaseSeeder extends Seeder
             'name' => 'Test User',
             'email' => 'test@example.com',
         ]);
+
+        // Crear datos de ejemplo para personas y préstamos
+        $this->call([
+            PersonaPrestamoSeeder::class,
+        ]);
     }
 }

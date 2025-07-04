@@ -3,6 +3,7 @@
 namespace App\Models;
 
 use Carbon\Carbon;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
 /**
@@ -15,6 +16,8 @@ use Illuminate\Database\Eloquent\Model;
  * @property string $fecha_prestamo
  * @property string $dias_apagar
  * @property boolean $estado
+ * @property string $direccion
+ * @property string $barrio
  * @property string $created_at
  * @property string $updated_at
  *
@@ -28,10 +31,12 @@ use Illuminate\Database\Eloquent\Model;
  */
 class Prestamo extends Model
 {
+    use HasFactory;
+    
     public const INTERES = 0.2;
     protected $table = 'prestamos';
 
-    protected $fillable = ['id_persona', 'monto_prestado', 'abonado', 'monto_apagar', 'cuota', 'fecha_prestamo', 'dias_apagar', 'estado'];
+    protected $fillable = ['id_persona', 'monto_prestado', 'abonado', 'monto_apagar', 'cuota', 'fecha_prestamo', 'dias_apagar', 'estado', 'direccion', 'barrio'];
 
     public function persona()
     {
