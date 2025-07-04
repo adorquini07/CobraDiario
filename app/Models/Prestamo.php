@@ -89,11 +89,8 @@ class Prestamo extends Model
             ->whereDoesntHave('pagos', function ($query) {
                 $query->whereDate('fecha_pago', Carbon::today());
             })
-            ->with(['persona' => function ($query) {
-                $query->orderBy('barrio');
-            }])
             ->get()
-            ->sortBy('persona.barrio');
+            ->sortBy('barrio');
     }
 
     public static function RecogerHoy(): int
