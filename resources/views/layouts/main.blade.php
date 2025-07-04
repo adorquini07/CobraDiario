@@ -49,8 +49,8 @@
         <nav class="navbar navbar-expand-lg navbar-dark" style="background: linear-gradient(135deg, #2c3e50 0%, #34495e 100%);">
             <div class="container">
                 <a class="navbar-brand fw-bold text-warning" href="{{ route('pagos.resumen') }}">
-                    <i class="fas fa-coins me-2"></i>
-                    CobraDiario
+                    <img src="{{ asset('imagenes/logo.jpeg') }}" alt="Logo" style="width: 30px; height: 30px;">
+                    MAIVVI
                 </a>
                 
                 <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
