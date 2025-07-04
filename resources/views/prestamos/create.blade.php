@@ -112,6 +112,41 @@
                             </div>
                         </div>
                         
+                        <!-- Barrio y Dirección -->
+                        <div class="row">
+                            <div class="col-md-6 mb-3">
+                                <label for="barrio" class="form-label">
+                                    <i class="fas fa-map-marker-alt me-1"></i>Barrio
+                                </label>
+                                <input type="text"
+                                       name="barrio"
+                                       id="barrio"
+                                       class="form-control @error('barrio') is-invalid @enderror"
+                                       value="{{ old('barrio') }}"
+                                       placeholder="Ingresa el barrio"
+                                       required>
+                                @error('barrio')
+                                    <div class="invalid-feedback">{{ $message }}</div>
+                                @enderror
+                            </div>
+                            
+                            <div class="col-md-6 mb-3">
+                                <label for="direccion" class="form-label">
+                                    <i class="fas fa-home me-1"></i>Dirección
+                                </label>
+                                <input type="text"
+                                       name="direccion"
+                                       id="direccion"
+                                       class="form-control @error('direccion') is-invalid @enderror"
+                                       value="{{ old('direccion') }}"
+                                       placeholder="Ingresa la dirección"
+                                       required>
+                                @error('direccion')
+                                    <div class="invalid-feedback">{{ $message }}</div>
+                                @enderror
+                            </div>
+                        </div>
+                        
                         <!-- Días a Pagar -->
                         <div class="mb-4">
                             <label class="form-label">
@@ -161,6 +196,7 @@
                                         <li>Selecciona la persona que recibirá el préstamo</li>
                                         <li>El monto prestado debe ser mayor a 0</li>
                                         <li>La cuota debe ser menor o igual al monto prestado</li>
+                                        <li>Completa la información de ubicación donde va ser cobrado (barrio y dirección)</li>
                                         <li>Selecciona al menos un día de pago</li>
                                     </ul>
                                 </div>
