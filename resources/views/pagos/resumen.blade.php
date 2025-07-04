@@ -239,7 +239,7 @@
                                             <th>Cliente</th>
                                             <th>Monto Pagado</th>
                                             <th>Hora</th>
-                                            <th>Préstamo</th>
+                                            <th>Monto a Pagar</th>
                                             <th>Debe</th>
                                         </tr>
                                     </thead>
@@ -259,7 +259,7 @@
                                             </td>
                                             <td class="fw-bold text-success">${{ number_format($pago->monto_pagado, 0, ',', '.') }}</td>
                                             <td>{{ \Carbon\Carbon::parse($pago->created_at)->format('H:i') }}</td>
-                                            <td>${{ number_format($pago->prestamo->monto_prestado, 0, ',', '.') }}</td>
+                                            <td>${{ number_format($pago->prestamo->monto_apagar, 0, ',', '.') }}</td>
                                             <td>${{ number_format($pago->prestamo->monto_apagar - $pago->prestamo->abonado, 0, ',', '.') }}</td>
                                         </tr>
                                         @endforeach
@@ -286,6 +286,10 @@
                                         <div class="col-6">
                                             <small class="text-muted">Monto:</small>
                                             <div class="fw-bold text-success">${{ number_format($pago->monto_pagado, 0, ',', '.') }}</div>
+                                        </div>
+                                        <div class="col-6">
+                                            <small class="text-muted">Monto a Pagar:</small>
+                                            <div class="fw-bold">${{ number_format($pago->prestamo->monto_apagar, 0, ',', '.') }}</div>
                                         </div>
                                         <div class="col-6">
                                             <small class="text-muted">Debe:</small>
