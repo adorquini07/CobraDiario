@@ -28,6 +28,8 @@ class PrestamoRequest extends FormRequest
             'fecha_prestamo' => 'required|date',
             'dias_apagar' => 'required|array|min:1',
             'dias_apagar.*' => 'required|string',
+            'direccion' => 'required|string',
+            'barrio' => 'required|string',
         ];
     }
 
@@ -48,6 +50,10 @@ class PrestamoRequest extends FormRequest
             'dias_apagar.array' => 'Los días a pagar deben ser un array',
             'dias_apagar.*.required' => 'El día a pagar es requerido',
             'dias_apagar.*.string' => 'El día a pagar debe ser un string',
+            'direccion.required' => 'La dirección es requerida',
+            'direccion.string' => 'La dirección debe ser un string',
+            'barrio.required' => 'El barrio es requerido',
+            'barrio.string' => 'El barrio debe ser un string',
         ];
     }
 }
