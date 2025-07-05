@@ -61,11 +61,13 @@
                                                 <a href="{{ route('pagos.create', $prestamo->id) }}" class="btn btn-success btn-sm"><i class="fas fa-money-bill-wave"></i></a>
                                                 @endif
                                                 <a href="{{ route('prestamos.edit', $prestamo->id) }}" class="btn btn-warning btn-sm"><i class="fas fa-pencil-alt"></i></a>
+                                                @if (!$prestamo->pagos->count() > 0)
                                                 <form action="{{ route('prestamos.destroy', $prestamo->id) }}" method="POST" class="d-inline">
                                                     @csrf
                                                     @method('delete')
                                                     <button type="submit" class="btn btn-danger btn-sm" onclick="return confirm('¿Estás seguro de eliminar este préstamo?')"><i class="fas fa-trash-alt"></i></button>
                                                 </form>
+                                                @endif
                                             </div>
                                         </td>
                                     </tr>
@@ -142,6 +144,7 @@
                                         <a href="{{ route('prestamos.edit', $prestamo->id) }}" class="btn btn-warning btn-sm flex-fill">
                                             <i class="fas fa-edit"></i> Editar
                                         </a>
+                                        @if (!$prestamo->pagos->count() > 0)
                                         <form action="{{ route('prestamos.destroy', $prestamo->id) }}" method="POST" class="flex-fill">
                                             @csrf
                                             @method('delete')
@@ -149,6 +152,7 @@
                                                 <i class="fas fa-trash"></i> Eliminar
                                             </button>
                                         </form>
+                                        @endif
                                     </div>
                                 </div>
                             </div>
