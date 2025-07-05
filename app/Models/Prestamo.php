@@ -48,9 +48,11 @@ class Prestamo extends Model
         return $this->hasMany(Pago::class, 'id_prestamo', 'id');
     }
 
-    public function guardarPrestamo()
+    public function guardarPrestamo(bool $update = true)
     {
-        $this->monto_apagar = ($this->monto_prestado * self::INTERES) + $this->monto_prestado;
+        if($update){
+            $this->monto_apagar = ($this->monto_prestado * self::INTERES) + $this->monto_prestado;
+        }
         $this->estado = true;
         $this->dias_apagar = json_encode($this->dias_apagar);
         assert($this->save());

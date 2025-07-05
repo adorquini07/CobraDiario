@@ -63,8 +63,12 @@ class PrestamoController extends Controller
     {
         $validated = $request->validated();
         $model = Prestamo::findOrFail($id);
+        if ($model->monto_prestado != $validated['monto_prestado']) {
+            $validated['monto_apagar'] = $model->monto_apagar + ($validated['monto_prestado'] + ($validated['monto_prestado'] * Prestamo::INTERES));
+            $validated['monto_prestado'] += $model->monto_prestado;
+        }
         $model->fill($validated);
-        assert($model->guardarPrestamo());
+        assert($model->guardarPrestamo(false));
         return redirect()->route('prestamos.index')->with('info', 'Prestamo actualizado exitosamente');
     }
 
