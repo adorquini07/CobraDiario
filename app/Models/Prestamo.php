@@ -53,6 +53,7 @@ class Prestamo extends Model
         if($update){
             $this->monto_apagar = ($this->monto_prestado * self::INTERES) + $this->monto_prestado;
         }
+        $this->barrio = mb_strtoupper($this->barrio);
         $this->estado = true;
         $this->dias_apagar = json_encode($this->dias_apagar);
         assert($this->save());
