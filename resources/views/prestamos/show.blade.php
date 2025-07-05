@@ -38,6 +38,14 @@
                             <div class="fw-bold">{{ $prestamo->fecha_prestamo }}</div>
                         </div>
                         <div class="col-6 col-md-4 mt-3">
+                            <small class="text-muted">Dirección:</small>
+                            <div class="fw-bold">{{ $prestamo->direccion }}</div>
+                        </div>
+                        <div class="col-6 col-md-4 mt-3">
+                            <small class="text-muted">Barrio:</small>
+                            <div class="fw-bold">{{ $prestamo->barrio }}</div>
+                        </div>
+                        <div class="col-6 col-md-4 mt-3">
                             <small class="text-muted">Días a Pagar:</small>
                             <div class="fw-bold">{{ $prestamo->diasApagar() }}</div>
                         </div>
