@@ -5,6 +5,7 @@ namespace App\Models;
 use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Facades\DB;
 
 /**
  * @property int $id
@@ -49,16 +50,46 @@ class Prestamo extends Model
         return $this->hasMany(Pago::class, 'id_prestamo', 'id');
     }
 
-    public function guardarPrestamo(bool $update = true)
+    public function guardarPrestamo(bool $update = true, ?int $oldNumeracion = null)
     {
-        if ($update) {
-            $this->monto_apagar = ($this->monto_prestado * self::INTERES) + $this->monto_prestado;
-        }
-        $this->barrio = mb_strtoupper($this->barrio);
-        $this->estado = true;
-        $this->dias_apagar = json_encode($this->dias_apagar);
-        assert($this->save());
-        return true;
+
+        return DB::transaction(function () use ($update, $oldNumeracion) {
+            if ($update) {
+                $this->monto_apagar = ($this->monto_prestado * self::INTERES) + $this->monto_prestado;
+            }
+
+            $this->barrio = mb_strtoupper($this->barrio);
+            $this->estado = true;
+            $this->dias_apagar = json_encode($this->dias_apagar);
+
+            if (!is_null($oldNumeracion)) {
+                if ($this->numeracion < $oldNumeracion) {
+                    Prestamo::where('numeracion', '>=', $this->numeracion)
+                        ->where('numeracion', '<', $oldNumeracion)
+                        ->update([
+                            'numeracion' => DB::raw('numeracion + 1')
+                        ]);
+                } else {
+                    Prestamo::where('numeracion', '>', $oldNumeracion)
+                        ->where('numeracion', '<=', $this->numeracion)
+                        ->update([
+                            'numeracion' => DB::raw('numeracion - 1')
+                        ]);
+                }
+            } else {
+                $numeracionMaxima = Prestamo::max('numeracion') + 1;
+                if ($this->numeracion < $numeracionMaxima) {
+                    Prestamo::where('numeracion', '>=', $this->numeracion)
+                        ->where('numeracion', '<', $numeracionMaxima)
+                        ->update([
+                            'numeracion' => DB::raw('numeracion + 1')
+                        ]);
+                }
+            }
+
+            assert($this->save());
+            return true;
+        });
     }
 
     public function diasApagar()
@@ -126,8 +157,14 @@ class Prestamo extends Model
             $data['abonado'] = $this->abonado + ($this->monto_apagar - $this->abonado);
         }
 
+        $numeracionActual = $this->numeracion;
+        $data['numeracion'] = (int) $data['numeracion'];
 
         $this->fill($data);
+
+        if ($numeracionActual != $this->numeracion) {
+            return $this->guardarPrestamo(false, $numeracionActual);
+        }
         return $this->guardarPrestamo(false);
     }
 }
