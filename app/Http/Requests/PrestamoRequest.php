@@ -30,6 +30,7 @@ class PrestamoRequest extends FormRequest
             'dias_apagar.*' => 'required|string',
             'direccion' => 'required|string',
             'barrio' => 'required|string',
+            'numeracion' => 'required|numeric|min:1',
         ];
     }
 
@@ -54,6 +55,9 @@ class PrestamoRequest extends FormRequest
             'direccion.string' => 'La dirección debe ser un string',
             'barrio.required' => 'El barrio es requerido',
             'barrio.string' => 'El barrio debe ser un string',
+            'numeracion.required' => 'La numeración es requerida',
+            'numeracion.numeric' => 'La numeración debe ser un número',
+            'numeracion.min' => 'La numeración debe ser mayor a 0',
         ];
     }
 }

@@ -16,6 +16,7 @@ use Illuminate\Database\Eloquent\Model;
  * @property string $fecha_prestamo
  * @property string $dias_apagar
  * @property boolean $estado
+ * @property double $numeracion
  * @property string $direccion
  * @property string $barrio
  * @property string $created_at
@@ -36,7 +37,7 @@ class Prestamo extends Model
     public const INTERES = 0.2;
     protected $table = 'prestamos';
 
-    protected $fillable = ['id_persona', 'monto_prestado', 'abonado', 'monto_apagar', 'cuota', 'fecha_prestamo', 'dias_apagar', 'estado', 'direccion', 'barrio'];
+    protected $fillable = ['id_persona', 'monto_prestado', 'abonado', 'monto_apagar', 'cuota', 'fecha_prestamo', 'dias_apagar', 'estado', 'direccion', 'barrio', 'numeracion'];
 
     public function persona()
     {
@@ -92,8 +93,8 @@ class Prestamo extends Model
             ->whereDoesntHave('pagos', function ($query) {
                 $query->whereDate('fecha_pago', Carbon::today());
             })
-            ->get()
-            ->sortBy('barrio');
+            ->orderBy('numeracion', 'asc')
+            ->get();
     }
 
     public static function RecogerHoy(): int

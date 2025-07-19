@@ -143,6 +143,23 @@
                                 @enderror
                             </div>
                         </div>
+
+                        <!-- Numeración -->
+                        <div class="row">
+                            <div class="col-md-6 mb-3">
+                                <label for="numeracion" class="form-label">
+                                    <i class="fas fa-sort-numeric-up me-1"></i>Enrutamiento
+                                </label>
+                                <input type="number"
+                                       name="numeracion"
+                                       id="numeracion"
+                                       class="form-control @error('numeracion') is-invalid @enderror"
+                                       value="{{ old('numeracion', $prestamo->numeracion) }}"
+                                       placeholder="Ingresa el enrutamiento"
+                                       min="1"
+                                       required>
+                            </div>
+                        </div>
                         
                         <!-- Días a Pagar -->
                         <div class="mb-4">

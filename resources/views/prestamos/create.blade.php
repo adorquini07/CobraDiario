@@ -13,66 +13,66 @@
                 </div>
                 <div class="card-body p-4">
                     @if ($errors->any())
-                        <div class="alert alert-danger">
-                            <div class="d-flex align-items-center">
-                                <i class="fas fa-exclamation-triangle me-2"></i>
-                                <strong>Por favor corrige los siguientes errores:</strong>
-                            </div>
-                            <ul class="mb-0 mt-2">
-                                @foreach ($errors->all() as $error)
-                                    <li>{{ $error }}</li>
-                                @endforeach
-                            </ul>
+                    <div class="alert alert-danger">
+                        <div class="d-flex align-items-center">
+                            <i class="fas fa-exclamation-triangle me-2"></i>
+                            <strong>Por favor corrige los siguientes errores:</strong>
                         </div>
+                        <ul class="mb-0 mt-2">
+                            @foreach ($errors->all() as $error)
+                            <li>{{ $error }}</li>
+                            @endforeach
+                        </ul>
+                    </div>
                     @endif
-                    
+
                     <form action="{{ route('prestamos.store') }}" method="post">
                         @csrf
-                        
+
                         <!-- Información del Préstamo -->
                         <div class="row">
                             <div class="col-md-6 mb-3">
                                 <label for="id_persona" class="form-label">
                                     <i class="fas fa-user me-1"></i>Persona
                                 </label>
-                                <select name="id_persona" 
-                                        id="id_persona" 
-                                        class="form-select @error('id_persona') is-invalid @enderror"
-                                        required>
+                                <select name="id_persona"
+                                    id="id_persona"
+                                    class="form-select @error('id_persona') is-invalid @enderror"
+                                    required>
                                     <option value="">Seleccione una persona</option>
                                     @foreach ($personas as $persona)
-                                        <option value="{{ $persona->id }}" {{ old('id_persona') == $persona->id ? 'selected' : '' }}>
-                                            {{ $persona->nombre . ' ' . $persona->apellido }} - {{ $persona->nuip }}
-                                        </option>
+                                    <option value="{{ $persona->id }}" {{ old('id_persona') == $persona->id ? 'selected' : '' }}>
+                                        {{ $persona->nombre . ' ' . $persona->apellido }} - {{ $persona->nuip }}
+                                    </option>
                                     @endforeach
                                 </select>
                                 @error('id_persona')
-                                    <div class="invalid-feedback">{{ $message }}</div>
+                                <div class="invalid-feedback">{{ $message }}</div>
                                 @enderror
                             </div>
-                            
+
                             <div class="col-md-6 mb-3">
                                 <label for="monto_prestado" class="form-label">
                                     <i class="fas fa-dollar-sign me-1"></i>Monto Prestado
                                 </label>
                                 <div class="input-group">
                                     <span class="input-group-text">$</span>
-                                    <input type="number" 
-                                           name="monto_prestado" 
-                                           id="monto_prestado" 
-                                           class="form-control @error('monto_prestado') is-invalid @enderror"
-                                           value="{{ old('monto_prestado') }}"
-                                           placeholder="Ingresa el monto"
-                                           min="0"
-                                           step="1000"
-                                           required>
+                                    <input type="number"
+                                        name="monto_prestado"
+                                        id="monto_prestado"
+                                        class="form-control @error('monto_prestado') is-invalid @enderror"
+                                        value="{{ old('monto_prestado') }}"
+                                        placeholder="Ingresa el monto"
+                                        min="0"
+                                        step="1000"
+                                        required>
                                 </div>
                                 @error('monto_prestado')
-                                    <div class="invalid-feedback">{{ $message }}</div>
+                                <div class="invalid-feedback">{{ $message }}</div>
                                 @enderror
                             </div>
                         </div>
-                        
+
                         <!-- Cuota y Fecha -->
                         <div class="row">
                             <div class="col-md-6 mb-3">
@@ -82,36 +82,36 @@
                                 <div class="input-group">
                                     <span class="input-group-text">$</span>
                                     <input type="number"
-                                           name="cuota"
-                                           id="cuota"
-                                           class="form-control @error('cuota') is-invalid @enderror"
-                                           value="{{ old('cuota') }}"
-                                           placeholder="Ingresa la cuota"
-                                           min="0"
-                                           step="1000"
-                                           required>
+                                        name="cuota"
+                                        id="cuota"
+                                        class="form-control @error('cuota') is-invalid @enderror"
+                                        value="{{ old('cuota') }}"
+                                        placeholder="Ingresa la cuota"
+                                        min="0"
+                                        step="1000"
+                                        required>
                                 </div>
                                 @error('cuota')
-                                    <div class="invalid-feedback">{{ $message }}</div>
+                                <div class="invalid-feedback">{{ $message }}</div>
                                 @enderror
                             </div>
-                            
+
                             <div class="col-md-6 mb-3">
                                 <label for="fecha_prestamo" class="form-label">
                                     <i class="fas fa-calendar me-1"></i>Fecha de Préstamo
                                 </label>
                                 <input type="date"
-                                       name="fecha_prestamo"
-                                       id="fecha_prestamo"
-                                       class="form-control @error('fecha_prestamo') is-invalid @enderror"
-                                       value="{{ old('fecha_prestamo', date('Y-m-d')) }}"
-                                       required>
+                                    name="fecha_prestamo"
+                                    id="fecha_prestamo"
+                                    class="form-control @error('fecha_prestamo') is-invalid @enderror"
+                                    value="{{ old('fecha_prestamo', date('Y-m-d')) }}"
+                                    required>
                                 @error('fecha_prestamo')
-                                    <div class="invalid-feedback">{{ $message }}</div>
+                                <div class="invalid-feedback">{{ $message }}</div>
                                 @enderror
                             </div>
                         </div>
-                        
+
                         <!-- Barrio y Dirección -->
                         <div class="row">
                             <div class="col-md-6 mb-3">
@@ -119,34 +119,55 @@
                                     <i class="fas fa-map-marker-alt me-1"></i>Barrio
                                 </label>
                                 <input type="text"
-                                       name="barrio"
-                                       id="barrio"
-                                       class="form-control @error('barrio') is-invalid @enderror"
-                                       value="{{ old('barrio') }}"
-                                       placeholder="Ingresa el barrio"
-                                       required>
+                                    name="barrio"
+                                    id="barrio"
+                                    class="form-control @error('barrio') is-invalid @enderror"
+                                    value="{{ old('barrio') }}"
+                                    placeholder="Ingresa el barrio"
+                                    required>
                                 @error('barrio')
-                                    <div class="invalid-feedback">{{ $message }}</div>
+                                <div class="invalid-feedback">{{ $message }}</div>
                                 @enderror
                             </div>
-                            
+
                             <div class="col-md-6 mb-3">
                                 <label for="direccion" class="form-label">
                                     <i class="fas fa-home me-1"></i>Dirección
                                 </label>
                                 <input type="text"
-                                       name="direccion"
-                                       id="direccion"
-                                       class="form-control @error('direccion') is-invalid @enderror"
-                                       value="{{ old('direccion') }}"
-                                       placeholder="Ingresa la dirección"
-                                       required>
+                                    name="direccion"
+                                    id="direccion"
+                                    class="form-control @error('direccion') is-invalid @enderror"
+                                    value="{{ old('direccion') }}"
+                                    placeholder="Ingresa la dirección"
+                                    required>
                                 @error('direccion')
-                                    <div class="invalid-feedback">{{ $message }}</div>
+                                <div class="invalid-feedback">{{ $message }}</div>
                                 @enderror
                             </div>
                         </div>
-                        
+
+                        <!-- Numeración -->
+                        <div class="row">
+                            <div class="col-md-6 mb-3">
+                                <label for="numeracion" class="form-label">
+                                    <i class="fas fa-sort-numeric-up me-1"></i>Enrutamiento
+                                </label>
+
+                                <input type="number"
+                                    name="numeracion"
+                                    id="numeracion"
+                                    class="form-control @error('numeracion') is-invalid @enderror"
+                                    value="{{ old('numeracion') }}"
+                                    placeholder="Ingresa el enrutamiento"
+                                    min="1"
+                                    required>
+                                @error('numeracion')
+                                <div class="invalid-feedback">{{ $message }}</div>
+                                @enderror
+                            </div>
+                        </div>
+
                         <!-- Días a Pagar -->
                         <div class="mb-4">
                             <label class="form-label">
@@ -155,12 +176,12 @@
                             <div class="row">
                                 @php
                                 $dias = [
-                                    'Lunes' => 'Lunes',
-                                    'Martes' => 'Martes',
-                                    'Miércoles' => 'Miércoles',
-                                    'Jueves' => 'Jueves',
-                                    'Viernes' => 'Viernes',
-                                    'Sábado' => 'Sábado',
+                                'Lunes' => 'Lunes',
+                                'Martes' => 'Martes',
+                                'Miércoles' => 'Miércoles',
+                                'Jueves' => 'Jueves',
+                                'Viernes' => 'Viernes',
+                                'Sábado' => 'Sábado',
                                 ];
                                 $seleccionados = old('dias_apagar', []);
                                 @endphp
@@ -169,11 +190,11 @@
                                 <div class="col-md-3 col-6 mb-2">
                                     <div class="form-check">
                                         <input class="form-check-input @error('dias_apagar') is-invalid @enderror"
-                                               type="checkbox"
-                                               name="dias_apagar[]"
-                                               value="{{ $valor }}"
-                                               id="dia_{{ $valor }}"
-                                               {{ in_array($valor, $seleccionados) ? 'checked' : '' }}>
+                                            type="checkbox"
+                                            name="dias_apagar[]"
+                                            value="{{ $valor }}"
+                                            id="dia_{{ $valor }}"
+                                            {{ in_array($valor, $seleccionados) ? 'checked' : '' }}>
                                         <label class="form-check-label" for="dia_{{ $valor }}">
                                             {{ $dia }}
                                         </label>
@@ -182,10 +203,10 @@
                                 @endforeach
                             </div>
                             @error('dias_apagar')
-                                <div class="text-danger small mt-1">{{ $message }}</div>
+                            <div class="text-danger small mt-1">{{ $message }}</div>
                             @enderror
                         </div>
-                        
+
                         <!-- Información adicional -->
                         <div class="alert alert-info mb-4">
                             <div class="d-flex align-items-center">
@@ -202,7 +223,7 @@
                                 </div>
                             </div>
                         </div>
-                        
+
                         <!-- Botones de Acción -->
                         <div class="d-grid gap-2 d-md-flex justify-content-md-end">
                             <a href="{{ route('prestamos.index') }}" class="btn btn-outline-secondary">
@@ -220,109 +241,114 @@
 </div>
 
 <style>
-@media (max-width: 768px) {
-    .container {
-        padding-left: 15px;
-        padding-right: 15px;
-    }
-    
-    .card-body {
-        padding: 20px !important;
-    }
-    
-    .form-label {
-        font-weight: 600;
-        margin-bottom: 8px;
-    }
-    
-    .form-control, .form-select {
-        padding: 12px;
-        font-size: 16px; /* Evita zoom en iOS */
-    }
-    
-    .btn {
-        padding: 12px 20px;
-        font-size: 16px;
-    }
-    
-    .d-grid.gap-2.d-md-flex {
-        grid-template-columns: 1fr 1fr;
-        gap: 10px !important;
-    }
-    
-    .form-check {
-        margin-bottom: 10px;
-    }
-}
+    @media (max-width: 768px) {
+        .container {
+            padding-left: 15px;
+            padding-right: 15px;
+        }
 
-@media (min-width: 769px) {
-    .card {
-        border-radius: 10px;
+        .card-body {
+            padding: 20px !important;
+        }
+
+        .form-label {
+            font-weight: 600;
+            margin-bottom: 8px;
+        }
+
+        .form-control,
+        .form-select {
+            padding: 12px;
+            font-size: 16px;
+            /* Evita zoom en iOS */
+        }
+
+        .btn {
+            padding: 12px 20px;
+            font-size: 16px;
+        }
+
+        .d-grid.gap-2.d-md-flex {
+            grid-template-columns: 1fr 1fr;
+            gap: 10px !important;
+        }
+
+        .form-check {
+            margin-bottom: 10px;
+        }
     }
-    
-    .form-control:focus, .form-select:focus {
+
+    @media (min-width: 769px) {
+        .card {
+            border-radius: 10px;
+        }
+
+        .form-control:focus,
+        .form-select:focus {
+            border-color: #198754;
+            box-shadow: 0 0 0 0.2rem rgba(25, 135, 84, 0.25);
+        }
+
+        .btn:hover {
+            transform: translateY(-1px);
+            transition: transform 0.2s ease;
+        }
+    }
+
+    .form-control,
+    .form-select {
+        border-radius: 8px;
+        border: 2px solid #e9ecef;
+        transition: all 0.3s ease;
+    }
+
+    .form-control:focus,
+    .form-select:focus {
         border-color: #198754;
-        box-shadow: 0 0 0 0.2rem rgba(25, 135, 84, 0.25);
+        box-shadow: 0 0 0 0.2rem rgba(25, 135, 84, 0.15);
     }
-    
-    .btn:hover {
-        transform: translateY(-1px);
-        transition: transform 0.2s ease;
+
+    .input-group-text {
+        background-color: #f8f9fa;
+        border: 2px solid #e9ecef;
+        border-right: none;
+        border-radius: 8px 0 0 8px;
     }
-}
 
-.form-control, .form-select {
-    border-radius: 8px;
-    border: 2px solid #e9ecef;
-    transition: all 0.3s ease;
-}
+    .input-group .form-control {
+        border-left: none;
+        border-radius: 0 8px 8px 0;
+    }
 
-.form-control:focus, .form-select:focus {
-    border-color: #198754;
-    box-shadow: 0 0 0 0.2rem rgba(25, 135, 84, 0.15);
-}
+    .card-header {
+        border-radius: 10px 10px 0 0 !important;
+    }
 
-.input-group-text {
-    background-color: #f8f9fa;
-    border: 2px solid #e9ecef;
-    border-right: none;
-    border-radius: 8px 0 0 8px;
-}
+    .alert {
+        border-radius: 8px;
+        border: none;
+    }
 
-.input-group .form-control {
-    border-left: none;
-    border-radius: 0 8px 8px 0;
-}
+    .btn {
+        border-radius: 8px;
+        font-weight: 500;
+        transition: all 0.3s ease;
+    }
 
-.card-header {
-    border-radius: 10px 10px 0 0 !important;
-}
+    .form-check-input:checked {
+        background-color: #198754;
+        border-color: #198754;
+    }
 
-.alert {
-    border-radius: 8px;
-    border: none;
-}
+    .form-check-label {
+        cursor: pointer;
+        user-select: none;
+    }
 
-.btn {
-    border-radius: 8px;
-    font-weight: 500;
-    transition: all 0.3s ease;
-}
-
-.form-check-input:checked {
-    background-color: #198754;
-    border-color: #198754;
-}
-
-.form-check-label {
-    cursor: pointer;
-    user-select: none;
-}
-
-.alert-info {
-    background-color: #d1ecf1;
-    border-color: #bee5eb;
-    color: #0c5460;
-}
+    .alert-info {
+        background-color: #d1ecf1;
+        border-color: #bee5eb;
+        color: #0c5460;
+    }
 </style>
 @endsection
