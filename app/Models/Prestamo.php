@@ -32,7 +32,7 @@ use Illuminate\Database\Eloquent\Model;
 class Prestamo extends Model
 {
     use HasFactory;
-    
+
     public const INTERES = 0.2;
     protected $table = 'prestamos';
 
@@ -50,7 +50,7 @@ class Prestamo extends Model
 
     public function guardarPrestamo(bool $update = true)
     {
-        if($update){
+        if ($update) {
             $this->monto_apagar = ($this->monto_prestado * self::INTERES) + $this->monto_prestado;
         }
         $this->barrio = mb_strtoupper($this->barrio);
@@ -111,5 +111,22 @@ class Prestamo extends Model
     public function getPagoHoy()
     {
         return Pago::where('id_prestamo', $this->id)->where('fecha_pago', date('Y-m-d'))->exists();
+    }
+
+    public function actualizarConNuevoMonto(array $data): bool
+    {
+        if ($this->monto_prestado != $data['monto_prestado']) {
+            $data['monto_apagar'] = $this->monto_apagar + (
+                $data['monto_prestado'] + ($data['monto_prestado'] * self::INTERES)
+            );
+
+            $data['monto_prestado'] += $this->monto_prestado;
+
+            $data['abonado'] = $this->abonado + ($this->monto_apagar - $this->abonado);
+        }
+
+
+        $this->fill($data);
+        return $this->guardarPrestamo(false);
     }
 }
