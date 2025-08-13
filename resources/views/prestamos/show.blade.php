@@ -97,7 +97,7 @@
                                     </thead>
                                     <tbody>
                                         @foreach ($prestamo->pagos as $i => $pago)
-                                        <tr class="text-center">
+                                        <tr class="text-center {{ $pago->monto_pagado == 0 ? 'bg-danger text-white' : 'bg-success text-white' }}">
                                             <td>{{ $i + 1 }}</td>
                                             <td>${{ number_format($pago->monto_pagado, 0, ',', '.') }}</td>
                                             <td>{{ $pago->fecha_pago }}</td>
@@ -111,7 +111,7 @@
                         <!-- Vista móvil -->
                         <div class="d-lg-none">
                             @foreach ($prestamo->pagos as $i => $pago)
-                            <div class="card mb-2 border-primary">
+                            <div class="card mb-2 border-primary {{ $pago->monto_pagado == 0 ? 'border-danger' : 'border-success' }}">
                                 <div class="card-body p-2">
                                     <div class="d-flex justify-content-between align-items-center">
                                         <span class="fw-bold">Pago #{{ $i + 1 }}</span>
