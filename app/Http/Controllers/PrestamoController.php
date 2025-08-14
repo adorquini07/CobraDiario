@@ -5,16 +5,54 @@ namespace App\Http\Controllers;
 use App\Models\Persona;
 use App\Models\Prestamo;
 use App\Http\Requests\PrestamoRequest;
+use Illuminate\Http\Request;
 
 class PrestamoController extends Controller
 {
     /**
      * Display a listing of the resource.
      */
-    public function index()
+    public function index(Request $request)
     {
-        $prestamos = Prestamo::orderBy('numeracion', 'asc')->get();
-        return view('prestamos.index', compact('prestamos'));
+        $query = Prestamo::with('persona');
+
+
+        // Filtros específicos
+        if ($request->filled('persona')) {
+            $query->whereHas('persona', function ($q) use ($request) {
+                $q->where('nombre', 'LIKE', "%{$request->persona}%")
+                    ->orWhere('apellido', 'LIKE', "%{$request->persona}%");
+            });
+        }
+
+        if ($request->filled('barrio')) {
+            $query->where('barrio', 'LIKE', "%{$request->barrio}%");
+        }
+
+        if ($request->filled('estado')) {
+            $estado = $request->estado === 'activo' ? true : false;
+            $query->where('estado', $estado);
+        }
+
+        if ($request->filled('monto_min')) {
+            $query->where('monto_prestado', '>=', $request->monto_min);
+        }
+
+        if ($request->filled('monto_max')) {
+            $query->where('monto_prestado', '<=', $request->monto_max);
+        }
+
+        // Ordenamiento
+        $sortBy = $request->get('sort_by', 'numeracion');
+        $sortOrder = $request->get('sort_order', 'asc');
+        $query->orderBy($sortBy, $sortOrder);
+
+        $prestamos = $query->paginate(15);
+
+        // Obtener barrios únicos para el filtro
+        $barrios = Prestamo::distinct()->pluck('barrio')->sort()->filter();
+
+        return view('prestamos.index', compact('prestamos', 'barrios'));
     }
 
     /**
