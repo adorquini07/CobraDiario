@@ -43,7 +43,7 @@ class PersonaTest extends TestCase
     public function test_campos_fillable()
     {
         $persona = new Persona();
-        $fillable = ['nombre', 'apellido', 'nuip', 'telefono', 'direccion'];
+        $fillable = ['nombre', 'apellido', 'nuip', 'telefono', 'direccion', 'barrio'];
         $this->assertEquals($fillable, $persona->getFillable());
     }
 }
