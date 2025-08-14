@@ -4,16 +4,62 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\StorePersonaRequest;
 use App\Models\Persona;
+use Illuminate\Http\Request;
 
 class PersonaController extends Controller
 {
     /**
      * Display a listing of the resource.
      */
-    public function index()
+    public function index(Request $request)
     {
-        $personas = Persona::all();
-        return view('personas.index', compact('personas'));
+        $query = Persona::query();
+        
+        // Filtros dinámicos
+        if ($request->filled('search')) {
+            $search = $request->search;
+            $query->where(function($q) use ($search) {
+                $q->where('nombre', 'LIKE', "%{$search}%")
+                  ->orWhere('apellido', 'LIKE', "%{$search}%")
+                  ->orWhere('nuip', 'LIKE', "%{$search}%")
+                  ->orWhere('telefono', 'LIKE', "%{$search}%")
+                  ->orWhere('direccion', 'LIKE', "%{$search}%")
+                  ->orWhere('barrio', 'LIKE', "%{$search}%");
+            });
+        }
+        
+        // Filtros específicos
+        if ($request->filled('nombre')) {
+            $query->where('nombre', 'LIKE', "%{$request->nombre}%");
+        }
+        
+        if ($request->filled('apellido')) {
+            $query->where('apellido', 'LIKE', "%{$request->apellido}%");
+        }
+        
+        if ($request->filled('nuip')) {
+            $query->where('nuip', 'LIKE', "%{$request->nuip}%");
+        }
+        
+        if ($request->filled('telefono')) {
+            $query->where('telefono', 'LIKE', "%{$request->telefono}%");
+        }
+        
+        if ($request->filled('barrio')) {
+            $query->where('barrio', 'LIKE', "%{$request->barrio}%");
+        }
+        
+        // Ordenamiento
+        $sortBy = $request->get('sort_by', 'nombre');
+        $sortOrder = $request->get('sort_order', 'asc');
+        $query->orderBy($sortBy, $sortOrder);
+        
+        $personas = $query->paginate(15);
+        
+        // Obtener barrios únicos para el filtro
+        $barrios = Persona::distinct()->pluck('barrio')->sort()->filter();
+        
+        return view('personas.index', compact('personas', 'barrios'));
     }
 
     /**
