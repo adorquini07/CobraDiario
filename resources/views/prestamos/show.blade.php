@@ -60,9 +60,9 @@
                     </div>
                     <div class="d-flex gap-2 flex-wrap mt-3">
                         @if ($prestamo->estado && !$prestamo->getPagoHoy())
-                            <a href="{{ route('pagos.create', $prestamo->id) }}" class="btn btn-success btn-sm">
-                                <i class="fas fa-money-bill-wave"></i> Abonar
-                            </a>
+                        <a href="{{ route('pagos.create', $prestamo->id) }}" class="btn btn-success btn-sm">
+                            <i class="fas fa-money-bill-wave"></i> Abonar
+                        </a>
                         @endif
                         <a href="{{ route('prestamos.edit', $prestamo->id) }}" class="btn btn-warning btn-sm">
                             <i class="fas fa-edit"></i> Editar
@@ -83,96 +83,96 @@
                 </div>
                 <div class="card-body p-4">
                     @if ($prestamo->pagos->count())
-                        <!-- Vista de escritorio -->
-                        <div class="d-none d-lg-block">
-                            <div class="table-responsive">
-                                <table class="table table-bordered table-sm">
-                                    <thead>
-                                        <tr class="text-center">
-                                            <th>#</th>
-                                            <th>Monto Pagado</th>
-                                            <th>Fecha de Pago</th>
-                                            <th>Registrado</th>
-                                            <th>Acciones</th>
-                                        </tr>
-                                    </thead>
-                                    <tbody>
-                                        @foreach ($prestamo->pagos as $i => $pago)
-                                        <tr class="text-center {{ $pago->monto_pagado == 0 ? 'bg-danger text-white' : 'bg-success text-white' }}">
-                                            <td>{{ $i + 1 }}</td>
-                                            <td>${{ number_format($pago->monto_pagado, 0, ',', '.') }}</td>
-                                            <td>{{ $pago->fecha_pago }}</td>
-                                            <td>{{ $pago->created_at->format('d/m/Y H:i') }}</td>
-                                            <td>
-                                                <div class="btn-group btn-group-sm" role="group">
-                                                    <a href="{{ route('pagos.edit', $pago->id) }}" 
-                                                       class="btn btn-warning btn-sm" 
-                                                       title="Editar pago">
-                                                        <i class="fas fa-edit"></i>
-                                                    </a>
-                                                    <form action="{{ route('pagos.destroy', $pago->id) }}" 
-                                                          method="POST" 
-                                                          class="d-inline" 
-                                                          onsubmit="return confirm('¿Estás seguro de que quieres eliminar este pago?')">
-                                                        @csrf
-                                                        @method('DELETE')
-                                                        <button type="submit" 
-                                                                class="btn btn-danger btn-sm" 
-                                                                title="Eliminar pago">
-                                                            <i class="fas fa-trash"></i>
-                                                        </button>
-                                                    </form>
-                                                </div>
-                                            </td>
-                                        </tr>
-                                        @endforeach
-                                    </tbody>
-                                </table>
-                            </div>
+                    <!-- Vista de escritorio -->
+                    <div class="d-none d-lg-block">
+                        <div class="table-responsive">
+                            <table class="table table-bordered table-sm">
+                                <thead>
+                                    <tr class="text-center">
+                                        <th>#</th>
+                                        <th>Monto Pagado</th>
+                                        <th>Fecha de Pago</th>
+                                        <th>Registrado</th>
+                                        <th>Acciones</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    @foreach ($prestamo->pagos as $i => $pago)
+                                    <tr class="text-center {{ $pago->monto_pagado == 0 ? 'bg-danger text-white' : 'bg-success text-white' }}">
+                                        <td>{{ $i + 1 }}</td>
+                                        <td>${{ number_format($pago->monto_pagado, 0, ',', '.') }}</td>
+                                        <td>{{ $pago->fecha_pago }}</td>
+                                        <td>{{ $pago->created_at->format('d/m/Y H:i') }}</td>
+                                        <td>
+                                            <div class="btn-group btn-group-sm" role="group">
+                                                <a href="{{ route('pagos.edit', $pago->id) }}"
+                                                    class="btn btn-warning btn-sm"
+                                                    title="Editar pago">
+                                                    <i class="fas fa-edit"></i>
+                                                </a>
+                                                <form action="{{ route('pagos.destroy', $pago->id) }}"
+                                                    method="POST"
+                                                    class="d-inline"
+                                                    onsubmit="return confirm('¿Estás seguro de que quieres eliminar este pago?')">
+                                                    @csrf
+                                                    @method('DELETE')
+                                                    <button type="submit"
+                                                        class="btn btn-danger btn-sm"
+                                                        title="Eliminar pago">
+                                                        <i class="fas fa-trash"></i>
+                                                    </button>
+                                                </form>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                    @endforeach
+                                </tbody>
+                            </table>
                         </div>
-                        <!-- Vista móvil -->
-                        <div class="d-lg-none">
-                            @foreach ($prestamo->pagos as $i => $pago)
-                            <div class="card mb-2 border-primary {{ $pago->monto_pagado == 0 ? 'border-danger' : 'border-success' }}">
-                                <div class="card-body p-2">
-                                    <div class="d-flex justify-content-between align-items-center">
-                                        <span class="fw-bold">Pago #{{ $i + 1 }}</span>
-                                        <span class="badge bg-primary">${{ number_format($pago->monto_pagado, 0, ',', '.') }}</span>
-                                    </div>
-                                    <div class="mt-2">
-                                        <small class="text-muted">Fecha de Pago:</small>
-                                        <div>{{ $pago->fecha_pago }}</div>
-                                    </div>
-                                    <div>
-                                        <small class="text-muted">Registrado:</small>
-                                        <div>{{ $pago->created_at->format('d/m/Y H:i') }}</div>
-                                    </div>
-                                    <!-- Acciones móviles -->
-                                    <div class="mt-3 d-flex gap-2">
-                                        <a href="{{ route('pagos.edit', $pago->id) }}" 
-                                           class="btn btn-warning btn-sm flex-fill">
-                                            <i class="fas fa-edit me-1"></i>Editar
-                                        </a>
-                                        <form action="{{ route('pagos.destroy', $pago->id) }}" 
-                                              method="POST" 
-                                              class="flex-fill" 
-                                              onsubmit="return confirm('¿Estás seguro de que quieres eliminar este pago?')">
-                                            @csrf
-                                            @method('DELETE')
-                                            <button type="submit" class="btn btn-danger btn-sm w-100">
-                                                <i class="fas fa-trash me-1"></i>Eliminar
-                                            </button>
-                                        </form>
-                                    </div>
+                    </div>
+                    <!-- Vista móvil -->
+                    <div class="d-lg-none">
+                        @foreach ($prestamo->pagos as $i => $pago)
+                        <div class="card mb-2 border-primary {{ $pago->monto_pagado == 0 ? 'border-danger' : 'border-success' }}">
+                            <div class="card-body p-2">
+                                <div class="d-flex justify-content-between align-items-center">
+                                    <span class="fw-bold">Pago #{{ $i + 1 }}</span>
+                                    <span class="badge bg-primary">${{ number_format($pago->monto_pagado, 0, ',', '.') }}</span>
+                                </div>
+                                <div class="mt-2">
+                                    <small class="text-muted">Fecha de Pago:</small>
+                                    <div>{{ $pago->fecha_pago }}</div>
+                                </div>
+                                <div>
+                                    <small class="text-muted">Registrado:</small>
+                                    <div>{{ $pago->created_at->format('d/m/Y H:i') }}</div>
+                                </div>
+                                <!-- Acciones móviles -->
+                                <div class="mt-3 d-flex gap-2">
+                                    <a href="{{ route('pagos.edit', $pago->id) }}"
+                                        class="btn btn-warning btn-sm flex-fill">
+                                        <i class="fas fa-edit me-1"></i>Editar
+                                    </a>
+                                    <form action="{{ route('pagos.destroy', $pago->id) }}"
+                                        method="POST"
+                                        class="flex-fill"
+                                        onsubmit="return confirm('¿Estás seguro de que quieres eliminar este pago?')">
+                                        @csrf
+                                        @method('DELETE')
+                                        <button type="submit" class="btn btn-danger btn-sm w-100">
+                                            <i class="fas fa-trash me-1"></i>Eliminar
+                                        </button>
+                                    </form>
                                 </div>
                             </div>
-                            @endforeach
                         </div>
+                        @endforeach
+                    </div>
                     @else
-                        <div class="text-center py-4">
-                            <i class="fas fa-inbox fa-3x text-muted mb-3"></i>
-                            <p class="text-muted">No hay pagos registrados para este préstamo</p>
-                        </div>
+                    <div class="text-center py-4">
+                        <i class="fas fa-inbox fa-3x text-muted mb-3"></i>
+                        <p class="text-muted">No hay pagos registrados para este préstamo</p>
+                    </div>
                     @endif
                 </div>
             </div>
@@ -181,43 +181,51 @@
 </div>
 
 <style>
-@media (max-width: 768px) {
-    .container {
-        padding-left: 15px;
-        padding-right: 15px;
+    @media (max-width: 768px) {
+        .container {
+            padding-left: 15px;
+            padding-right: 15px;
+        }
+
+        .card-body {
+            padding: 20px !important;
+        }
+
+        .form-label {
+            font-weight: 600;
+            margin-bottom: 8px;
+        }
+
+        .btn {
+            padding: 12px 20px;
+            font-size: 16px;
+        }
+
+        .d-grid.gap-2.d-md-flex {
+            grid-template-columns: 1fr 1fr;
+            gap: 10px !important;
+        }
     }
-    .card-body {
-        padding: 20px !important;
+
+    @media (min-width: 769px) {
+        .card {
+            border-radius: 10px;
+        }
+
+        .btn:hover {
+            transform: translateY(-1px);
+            transition: transform 0.2s ease;
+        }
     }
-    .form-label {
-        font-weight: 600;
-        margin-bottom: 8px;
+
+    .card-header {
+        border-radius: 10px 10px 0 0 !important;
     }
+
     .btn {
-        padding: 12px 20px;
-        font-size: 16px;
+        border-radius: 8px;
+        font-weight: 500;
+        transition: all 0.3s ease;
     }
-    .d-grid.gap-2.d-md-flex {
-        grid-template-columns: 1fr 1fr;
-        gap: 10px !important;
-    }
-}
-@media (min-width: 769px) {
-    .card {
-        border-radius: 10px;
-    }
-    .btn:hover {
-        transform: translateY(-1px);
-        transition: transform 0.2s ease;
-    }
-}
-.card-header {
-    border-radius: 10px 10px 0 0 !important;
-}
-.btn {
-    border-radius: 8px;
-    font-weight: 500;
-    transition: all 0.3s ease;
-}
 </style>
 @endsection
