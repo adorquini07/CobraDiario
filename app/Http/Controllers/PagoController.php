@@ -58,7 +58,8 @@ class PagoController extends Controller
      */
     public function edit(Pago $pago)
     {
-        //
+        $prestamo = $pago->prestamo;
+        return view('pagos.edit', compact('pago', 'prestamo'));
     }
 
     /**
@@ -66,7 +67,17 @@ class PagoController extends Controller
      */
     public function update(PagoRequest $request, Pago $pago)
     {
-        //
+        $validated = $request->validated();
+        
+        // Actualizar el pago
+        $pago->update($validated);
+        
+        // Recalcular el abonado del préstamo
+        $prestamo = $pago->prestamo;
+        $totalAbonado = $prestamo->pagos()->sum('monto_pagado');
+        $prestamo->update(['abonado' => $totalAbonado]);
+        
+        return redirect()->route('prestamos.show', $prestamo->id)->with('success', 'Pago actualizado correctamente');
     }
 
     /**
@@ -74,6 +85,13 @@ class PagoController extends Controller
      */
     public function destroy(Pago $pago)
     {
-        //
+        $prestamo = $pago->prestamo;
+        $pago->delete();
+        
+        // Recalcular el abonado del préstamo
+        $totalAbonado = $prestamo->pagos()->sum('monto_pagado');
+        $prestamo->update(['abonado' => $totalAbonado]);
+        
+        return redirect()->route('prestamos.show', $prestamo->id)->with('success', 'Pago eliminado correctamente');
     }
 }

@@ -93,6 +93,7 @@
                                             <th>Monto Pagado</th>
                                             <th>Fecha de Pago</th>
                                             <th>Registrado</th>
+                                            <th>Acciones</th>
                                         </tr>
                                     </thead>
                                     <tbody>
@@ -102,6 +103,27 @@
                                             <td>${{ number_format($pago->monto_pagado, 0, ',', '.') }}</td>
                                             <td>{{ $pago->fecha_pago }}</td>
                                             <td>{{ $pago->created_at->format('d/m/Y H:i') }}</td>
+                                            <td>
+                                                <div class="btn-group btn-group-sm" role="group">
+                                                    <a href="{{ route('pagos.edit', $pago->id) }}" 
+                                                       class="btn btn-warning btn-sm" 
+                                                       title="Editar pago">
+                                                        <i class="fas fa-edit"></i>
+                                                    </a>
+                                                    <form action="{{ route('pagos.destroy', $pago->id) }}" 
+                                                          method="POST" 
+                                                          class="d-inline" 
+                                                          onsubmit="return confirm('¿Estás seguro de que quieres eliminar este pago?')">
+                                                        @csrf
+                                                        @method('DELETE')
+                                                        <button type="submit" 
+                                                                class="btn btn-danger btn-sm" 
+                                                                title="Eliminar pago">
+                                                            <i class="fas fa-trash"></i>
+                                                        </button>
+                                                    </form>
+                                                </div>
+                                            </td>
                                         </tr>
                                         @endforeach
                                     </tbody>
@@ -124,6 +146,23 @@
                                     <div>
                                         <small class="text-muted">Registrado:</small>
                                         <div>{{ $pago->created_at->format('d/m/Y H:i') }}</div>
+                                    </div>
+                                    <!-- Acciones móviles -->
+                                    <div class="mt-3 d-flex gap-2">
+                                        <a href="{{ route('pagos.edit', $pago->id) }}" 
+                                           class="btn btn-warning btn-sm flex-fill">
+                                            <i class="fas fa-edit me-1"></i>Editar
+                                        </a>
+                                        <form action="{{ route('pagos.destroy', $pago->id) }}" 
+                                              method="POST" 
+                                              class="flex-fill" 
+                                              onsubmit="return confirm('¿Estás seguro de que quieres eliminar este pago?')">
+                                            @csrf
+                                            @method('DELETE')
+                                            <button type="submit" class="btn btn-danger btn-sm w-100">
+                                                <i class="fas fa-trash me-1"></i>Eliminar
+                                            </button>
+                                        </form>
                                     </div>
                                 </div>
                             </div>

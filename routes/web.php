@@ -45,6 +45,9 @@ Route::middleware('auth')->group(function () {
         Route::post('/', 'store')->name('store');
         Route::get('/show', 'show')->name('show');
         Route::get('/resumen', 'showResumen')->name('resumen');
+        Route::get('/edit/{pago}', 'edit')->name('edit');
+        Route::put('/{pago}', 'update')->name('update');
+        Route::delete('/{pago}', 'destroy')->name('destroy');
     });
 });
 
