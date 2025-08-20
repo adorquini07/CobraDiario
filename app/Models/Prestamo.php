@@ -145,6 +145,28 @@ class Prestamo extends Model
         return Pago::where('id_prestamo', $this->id)->where('fecha_pago', date('Y-m-d'))->exists();
     }
 
+    /**
+     * Verifica si el préstamo tiene algún pago en cero
+     */
+    public function tienePagoEnCero()
+    {
+        return $this->pagos()->where('monto_pagado', 0)->exists();
+    }
+
+    /**
+     * Verifica si el préstamo debe cobrarse hoy
+     */
+    public function debeCobrarseHoy()
+    {
+        $diaActual = Carbon::now('America/Bogota')->locale('es')->dayName;
+        $diaActual = ucfirst($diaActual);
+
+        $dias = json_decode($this->dias_apagar);
+
+        return in_array($diaActual, $dias) && $this->estado && !$this->getPagoHoy();
+    }
+
+
     public function actualizarConNuevoMonto(array $data): bool
     {
         if ($this->monto_prestado != $data['monto_prestado']) {

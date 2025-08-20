@@ -191,6 +191,64 @@
     .estado-pagado {
         background: linear-gradient(45deg, #6c757d, #495057) !important;
     }
+
+    /* Estilos para resaltado de pagos en cero y cobros de hoy */
+    .pago-en-cero {
+        background-color: rgba(220, 53, 69, 0.1) !important;
+        border-left: 4px solid #dc3545 !important;
+    }
+
+    .pago-en-cero:hover {
+        background-color: rgba(220, 53, 69, 0.15) !important;
+    }
+
+    .cobrar-hoy {
+        background-color: rgba(255, 193, 7, 0.15) !important;
+        border-left: 4px solid #ffc107 !important;
+    }
+
+    .cobrar-hoy:hover {
+        background-color: rgba(255, 193, 7, 0.2) !important;
+    }
+
+    /* Combinación de ambos estados */
+    .pago-en-cero.cobrar-hoy {
+        background: linear-gradient(135deg, rgba(220, 53, 69, 0.1) 0%, rgba(255, 193, 7, 0.15) 100%) !important;
+        border-left: 4px solid #dc3545 !important;
+        border-right: 4px solid #ffc107 !important;
+    }
+
+    .pago-en-cero.cobrar-hoy:hover {
+        background: linear-gradient(135deg, rgba(220, 53, 69, 0.15) 0%, rgba(255, 193, 7, 0.2) 100%) !important;
+    }
+
+    /* Estilos para móvil */
+    @media (max-width: 991px) {
+        .pago-en-cero {
+            border-left: 3px solid #dc3545 !important;
+        }
+
+        .cobrar-hoy {
+            border-left: 3px solid #ffc107 !important;
+        }
+
+        .pago-en-cero.cobrar-hoy {
+            border-left: 3px solid #dc3545 !important;
+            border-right: 3px solid #ffc107 !important;
+        }
+
+        /* Mejorar la leyenda en móvil */
+        .alert-info .d-flex {
+            flex-direction: column;
+            align-items: flex-start !important;
+        }
+
+        .alert-info .d-flex>div {
+            margin-bottom: 0.5rem;
+        }
+    }
+
+
 </style>
 @endpush
 
@@ -311,11 +369,26 @@
                         </div>
                     </div>
 
+                    <!-- Leyenda de colores -->
+                    <div class="alert alert-info alert-dismissible fade show mb-3" role="alert">
+                        <div class="d-flex align-items-center gap-3 flex-wrap">
+                            <div class="d-flex align-items-center gap-2">
+                                <div class="bg-danger" style="width: 20px; height: 20px; border-radius: 4px;"></div>
+                                <small><strong>Rojo:</strong> Préstamos con pagos en cero</small>
+                            </div>
+                            <div class="d-flex align-items-center gap-2">
+                                <div class="bg-warning" style="width: 20px; height: 20px; border-radius: 4px;"></div>
+                                <small><strong>Amarillo:</strong> Préstamos a cobrar hoy</small>
+                            </div>
+                        </div>
+                        <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+                    </div>
+
                     <!-- Resultados -->
                     <div class="d-flex justify-content-between align-items-center mb-3">
                         <div class="d-flex align-items-center gap-2">
                             <span class="badge bg-primary" id="resultCount">{{ $prestamos->total() }} préstamos encontrados</span>
-                            @if(request()->hasAny(['search', 'persona', 'barrio', 'estado', 'monto_min', 'monto_max', 'fecha_desde', 'fecha_hasta']))
+                            @if(request()->hasAny(['search', 'persona', 'barrio', 'estado', 'monto_min', 'monto_max', 'fecha_desde', 'fecha_hasta', 'alerta']))
                             <span class="badge bg-warning text-dark">
                                 <i class="fas fa-filter me-1"></i>Filtros activos
                             </span>
@@ -350,7 +423,7 @@
                                 </thead>
                                 <tbody>
                                     @forelse ($prestamos as $prestamo)
-                                    <tr>
+                                    <tr class="{{ $prestamo->tienePagoEnCero() ? 'pago-en-cero' : '' }} {{ $prestamo->debeCobrarseHoy() ? 'cobrar-hoy' : '' }}">
                                         <td><span class="badge bg-info text-dark">{{ $prestamo->numeracion }}</span></td>
                                         <td class="fw-bold text-primary">{{ $prestamo->persona->nombre . ' ' . $prestamo->persona->apellido }}</td>
                                         <td class="monto-prestado">${{ number_format($prestamo->monto_prestado, 0, ',', '.') }}</td>
@@ -424,7 +497,7 @@
                     <!-- Vista móvil (cards) -->
                     <div id="cardsView" class="d-lg-none">
                         @forelse ($prestamos as $prestamo)
-                        <div class="card mb-3 border-0 shadow-sm">
+                        <div class="card mb-3 border-0 shadow-sm {{ $prestamo->tienePagoEnCero() ? 'pago-en-cero' : '' }} {{ $prestamo->debeCobrarseHoy() ? 'cobrar-hoy' : '' }}">
                             <div class="card-header bg-gradient-primary text-white">
                                 <div class="d-flex justify-content-between align-items-center">
                                     <h6 class="mb-0">{{ $prestamo->persona->nombre . ' ' . $prestamo->persona->apellido }}</h6>
