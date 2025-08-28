@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Http\Requests\StorePersonaRequest;
 use App\Http\Requests\UpdatePersonaRequest;
 use App\Models\Persona;
+use App\Models\Prestamo;
 use Illuminate\Http\Request;
 
 class PersonaController extends Controller
@@ -92,7 +93,10 @@ class PersonaController extends Controller
     public function edit(int $id)
     {
         $persona = Persona::findOrFail($id);
-        return view('personas.edit', compact('persona'));
+        $prestamosActivos = Prestamo::where('id_persona', $persona->id)
+                                   ->where('estado', 1)
+                                   ->count();
+        return view('personas.edit', compact('persona', 'prestamosActivos'));
     }
 
     /**
@@ -102,6 +106,10 @@ class PersonaController extends Controller
     {
         $validated = $request->validated();
         $persona = Persona::findOrFail($id);
+        
+        // Guardar el estado anterior para comparar
+        $estadoAnterior = $persona->estado;
+        
         $persona->fill($validated);
         $persona->barrio = mb_strtoupper($persona->barrio);
         
@@ -110,8 +118,22 @@ class PersonaController extends Controller
             $persona->observaciones = null;
         }
         
+        // Si la persona se está inactivando (cambiando de activo a inactivo)
+        if ($estadoAnterior == 1 && $validated['estado'] == 0) {
+            // Inactivar todos los préstamos de la persona
+            Prestamo::where('id_persona', $persona->id)
+                   ->where('estado', 1) // Solo los préstamos activos
+                   ->update(['estado' => 0]);
+        }
+        
         assert($persona->save());
-        return redirect()->route('personas.index')->with('info', 'Persona actualizada exitosamente');
+        
+        $mensaje = 'Persona actualizada exitosamente';
+        if ($estadoAnterior == 1 && $validated['estado'] == 0) {
+            $mensaje .= ' y todos sus préstamos han sido inactivados';
+        }
+        
+        return redirect()->route('personas.index')->with('info', $mensaje);
     }
 
     /**

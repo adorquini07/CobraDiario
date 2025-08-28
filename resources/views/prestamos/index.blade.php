@@ -435,7 +435,7 @@
                                         <td><span class="badge bg-secondary">{{ $prestamo->diasApagar() }}</span></td>
                                         <td>
                                             <span class="badge {{ $prestamo->estado ? 'estado-activo' : 'estado-pagado' }}">
-                                                {{ $prestamo->estado ? 'Activo' : 'Pagado' }}
+                                                {{ !$prestamo->persona->estado ? 'Inactivo' : ( $prestamo->estado ? 'Activo' : 'Pagado') }}
                                             </span>
                                         </td>
                                         <td>
@@ -559,7 +559,7 @@
                                             <i class="fas fa-toggle-on me-1"></i>Estado:
                                         </small>
                                         <span class="badge {{ $prestamo->estado ? 'estado-activo' : 'estado-pagado' }}">
-                                            {{ $prestamo->estado ? 'Activo' : 'Pagado' }}
+                                            {{ !$prestamo->persona->estado ? 'Inactivo' : ( $prestamo->estado ? 'Activo' : 'Pagado') }}
                                         </span>
                                     </div>
                                 </div>

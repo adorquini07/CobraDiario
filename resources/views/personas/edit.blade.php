@@ -143,6 +143,23 @@
                             @enderror
                         </div>
 
+                        <!-- Alerta de advertencia (solo visible cuando estado es inactivo) -->
+                        <div class="mb-4" id="advertencia-container" style="display: none;">
+                            <div class="alert alert-warning">
+                                <div class="d-flex align-items-center">
+                                    <i class="fas fa-exclamation-triangle me-2"></i>
+                                    <div>
+                                        <strong>Advertencia:</strong> Al marcar esta persona como inactiva, 
+                                        @if($prestamosActivos > 0)
+                                            sus {{ $prestamosActivos }} préstamo(s) activo(s) también se inactivarán automáticamente.
+                                        @else
+                                            todos sus préstamos activos también se inactivarán automáticamente.
+                                        @endif
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
                         <!-- Observaciones (solo visible cuando estado es inactivo) -->
                         <div class="mb-4" id="observaciones-container" style="display: none;">
                             <label for="observaciones" class="form-label">
@@ -166,6 +183,13 @@
                                     <strong>Editando:</strong> {{ $persona->nombre }} {{ $persona->apellido }}
                                     <br>
                                     <small class="text-muted">Cédula: {{ $persona->nuip }}</small>
+                                    @if($prestamosActivos > 0)
+                                    <br>
+                                    <small class="text-warning">
+                                        <i class="fas fa-exclamation-triangle me-1"></i>
+                                        Esta persona tiene {{ $prestamosActivos }} préstamo(s) activo(s)
+                                    </small>
+                                    @endif
                                 </div>
                             </div>
                         </div>
@@ -273,13 +297,16 @@ document.addEventListener('DOMContentLoaded', function() {
     const estadoSelect = document.getElementById('estado');
     const observacionesContainer = document.getElementById('observaciones-container');
     const observacionesTextarea = document.getElementById('observaciones');
+    const advertenciaContainer = document.getElementById('advertencia-container');
 
     function toggleObservaciones() {
         if (estadoSelect.value === '0') {
             observacionesContainer.style.display = 'block';
+            advertenciaContainer.style.display = 'block';
             observacionesTextarea.setAttribute('required', 'required');
         } else {
             observacionesContainer.style.display = 'none';
+            advertenciaContainer.style.display = 'none';
             observacionesTextarea.removeAttribute('required');
             observacionesTextarea.value = '';
         }
