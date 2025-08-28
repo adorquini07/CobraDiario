@@ -127,6 +127,9 @@
                             @enderror
                         </div>
 
+                        <!-- Campo oculto para estado (siempre activo en creación) -->
+                        <input type="hidden" name="estado" value="1">
+
                         <!-- Botones de Acción -->
                         <div class="d-grid gap-2 d-md-flex justify-content-md-end">
                             <a href="{{ route('personas.index') }}" class="btn btn-outline-secondary">

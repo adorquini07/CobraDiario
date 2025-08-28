@@ -129,6 +129,35 @@
                             @enderror
                         </div>
 
+                        <!-- Estado -->
+                        <div class="mb-4">
+                            <label for="estado" class="form-label">
+                                <i class="fas fa-toggle-on me-1"></i>Estado
+                            </label>
+                            <select name="estado" id="estado" class="form-select @error('estado') is-invalid @enderror" required>
+                                <option value="1" {{ old('estado', $persona->estado) == 1 ? 'selected' : '' }}>Activo</option>
+                                <option value="0" {{ old('estado', $persona->estado) == 0 ? 'selected' : '' }}>Inactivo</option>
+                            </select>
+                            @error('estado')
+                            <div class="invalid-feedback">{{ $message }}</div>
+                            @enderror
+                        </div>
+
+                        <!-- Observaciones (solo visible cuando estado es inactivo) -->
+                        <div class="mb-4" id="observaciones-container" style="display: none;">
+                            <label for="observaciones" class="form-label">
+                                <i class="fas fa-comment me-1"></i>Observaciones
+                            </label>
+                            <textarea name="observaciones"
+                                id="observaciones"
+                                class="form-control @error('observaciones') is-invalid @enderror"
+                                rows="4"
+                                placeholder="Ingresa las observaciones sobre por qué la persona está inactiva">{{ old('observaciones', $persona->observaciones) }}</textarea>
+                            @error('observaciones')
+                            <div class="invalid-feedback">{{ $message }}</div>
+                            @enderror
+                        </div>
+
                         <!-- Información de la persona -->
                         <div class="alert alert-info mb-4">
                             <div class="d-flex align-items-center">
@@ -238,4 +267,29 @@
         color: #0c5460;
     }
 </style>
+
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    const estadoSelect = document.getElementById('estado');
+    const observacionesContainer = document.getElementById('observaciones-container');
+    const observacionesTextarea = document.getElementById('observaciones');
+
+    function toggleObservaciones() {
+        if (estadoSelect.value === '0') {
+            observacionesContainer.style.display = 'block';
+            observacionesTextarea.setAttribute('required', 'required');
+        } else {
+            observacionesContainer.style.display = 'none';
+            observacionesTextarea.removeAttribute('required');
+            observacionesTextarea.value = '';
+        }
+    }
+
+    // Ejecutar al cargar la página
+    toggleObservaciones();
+
+    // Ejecutar cuando cambie el estado
+    estadoSelect.addEventListener('change', toggleObservaciones);
+});
+</script>
 @endsection

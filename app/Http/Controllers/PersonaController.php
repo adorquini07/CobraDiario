@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\StorePersonaRequest;
+use App\Http\Requests\UpdatePersonaRequest;
 use App\Models\Persona;
 use Illuminate\Http\Request;
 
@@ -66,6 +67,9 @@ class PersonaController extends Controller
         $model = new Persona();
         $model->fill($validated);
         $model->barrio = mb_strtoupper($model->barrio);
+        $model->estado = 1; // Siempre activo en creación
+        $model->observaciones = null; // Siempre null en creación
+        
         assert($model->save());
         return redirect()->route('personas.index')->with('info', 'Persona creada exitosamente');
     }
@@ -90,12 +94,18 @@ class PersonaController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(StorePersonaRequest $request, int $id)
+    public function update(UpdatePersonaRequest $request, int $id)
     {
         $validated = $request->validated();
         $persona = Persona::findOrFail($id);
         $persona->fill($validated);
         $persona->barrio = mb_strtoupper($persona->barrio);
+        
+        // Si el estado es activo, limpiar las observaciones
+        if ($validated['estado'] == 1) {
+            $persona->observaciones = null;
+        }
+        
         assert($persona->save());
         return redirect()->route('personas.index')->with('info', 'Persona actualizada exitosamente');
     }

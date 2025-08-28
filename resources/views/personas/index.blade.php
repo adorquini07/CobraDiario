@@ -316,6 +316,7 @@
                                         <th><i class="fas fa-mobile-alt me-1"></i>Celular</th>
                                         <th><i class="fas fa-map-marker-alt me-1"></i>Dirección</th>
                                         <th><i class="fas fa-map-marker-alt me-1"></i>Barrio</th>
+                                        <th><i class="fas fa-toggle-on me-1"></i>Estado</th>
                                         <th class="text-center"><i class="fas fa-cogs me-1"></i>Acciones</th>
                                     </tr>
                                 </thead>
@@ -332,6 +333,17 @@
                                         </td>
                                         <td><span class="text-secondary">{{ $persona->direccion }}</span></td>
                                         <td><span class="badge bg-secondary">{{ $persona->barrio }}</span></td>
+                                        <td>
+                                            @if($persona->estado == 1)
+                                                <span class="badge bg-success">
+                                                    <i class="fas fa-check-circle me-1"></i>Activo
+                                                </span>
+                                            @else
+                                                <span class="badge bg-danger">
+                                                    <i class="fas fa-times-circle me-1"></i>Inactivo
+                                                </span>
+                                            @endif
+                                        </td>
                                         <td>
                                             <div class="d-flex justify-content-center gap-1">
                                                 <a href="{{ route('personas.edit', $persona->id) }}"
@@ -359,7 +371,7 @@
                                     </tr>
                                     @empty
                                     <tr>
-                                        <td colspan="7" class="text-center py-4">
+                                        <td colspan="8" class="text-center py-4">
                                             <i class="fas fa-search fa-2x text-muted mb-2"></i>
                                             <p class="text-muted mb-0">No se encontraron personas con los filtros aplicados</p>
                                         </td>
@@ -402,6 +414,20 @@
                                         <i class="fas fa-home me-1"></i>Dirección:
                                     </small>
                                     <span class="text-secondary">{{ $persona->direccion }}</span>
+                                </div>
+                                <div class="mb-3">
+                                    <small class="text-muted d-block">
+                                        <i class="fas fa-toggle-on me-1"></i>Estado:
+                                    </small>
+                                    @if($persona->estado == 1)
+                                        <span class="badge bg-success">
+                                            <i class="fas fa-check-circle me-1"></i>Activo
+                                        </span>
+                                    @else
+                                        <span class="badge bg-danger">
+                                            <i class="fas fa-times-circle me-1"></i>Inactivo
+                                        </span>
+                                    @endif
                                 </div>
                                 <div class="d-grid gap-2 d-md-flex">
                                     <a href="{{ route('personas.edit', $persona->id) }}"
