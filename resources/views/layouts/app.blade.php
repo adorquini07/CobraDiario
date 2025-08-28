@@ -5,6 +5,14 @@
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <meta name="csrf-token" content="{{ csrf_token() }}">
 
+        <!-- Favicon -->
+        <link rel="icon" type="image/x-icon" href="{{ asset('favicon.ico') }}">
+        <link rel="icon" type="image/jpeg" href="{{ asset('imagenes/logo.jpeg') }}">
+        <link rel="shortcut icon" type="image/x-icon" href="{{ asset('favicon.ico') }}">
+        <link rel="shortcut icon" type="image/jpeg" href="{{ asset('imagenes/logo.jpeg') }}">
+        <link rel="apple-touch-icon" href="{{ asset('imagenes/logo.jpeg') }}">
+        <link rel="apple-touch-icon-precomposed" href="{{ asset('imagenes/logo.jpeg') }}">
+
         <title>{{ config('app.name', 'Laravel') }}</title>
 
         <!-- Fonts -->

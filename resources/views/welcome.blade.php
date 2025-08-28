@@ -4,6 +4,14 @@
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1">
 
+        <!-- Favicon -->
+        <link rel="icon" type="image/x-icon" href="{{ asset('favicon.ico') }}">
+        <link rel="icon" type="image/jpeg" href="{{ asset('imagenes/logo.jpeg') }}">
+        <link rel="shortcut icon" type="image/x-icon" href="{{ asset('favicon.ico') }}">
+        <link rel="shortcut icon" type="image/jpeg" href="{{ asset('imagenes/logo.jpeg') }}">
+        <link rel="apple-touch-icon" href="{{ asset('imagenes/logo.jpeg') }}">
+        <link rel="apple-touch-icon-precomposed" href="{{ asset('imagenes/logo.jpeg') }}">
+
         <title>Laravel</title>
 
         <!-- Fonts -->
