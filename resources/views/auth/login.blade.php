@@ -81,13 +81,6 @@
 
         <!-- Links -->
         <div class="auth-links">
-            @if (Route::has('password.request'))
-                <a href="{{ route('password.request') }}" class="text-decoration-none">
-                    <i class="fas fa-key me-1"></i>
-                    ¿Olvidaste tu contraseña?
-                </a>
-            @endif
-
             <a href="{{ route('register') }}" class="text-decoration-none">
                 <i class="fas fa-user-plus me-1"></i>
                 Crear cuenta
