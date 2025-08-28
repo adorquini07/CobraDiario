@@ -13,6 +13,8 @@ use Illuminate\Database\Eloquent\Model;
  * @property string $telefono
  * @property string $direccion
  * @property string $barrio
+ * @property int $estado Estado de la persona (1: Activo, 0: Inactivo)
+ * @property string|null $observaciones Observaciones adicionales sobre la persona
  * @property string $created_at
  * @property string $updated_at
  */
@@ -22,7 +24,7 @@ class Persona extends Model
     
     protected $table = 'personas';
 
-    protected $fillable = ['nombre', 'apellido', 'nuip', 'telefono', 'direccion', 'barrio'];
+    protected $fillable = ['nombre', 'apellido', 'nuip', 'telefono', 'direccion', 'barrio', 'estado', 'observaciones'];
 
     public function prestamos()
     {
