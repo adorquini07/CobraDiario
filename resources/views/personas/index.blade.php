@@ -260,6 +260,17 @@
                                             @endforeach
                                         </select>
                                     </div>
+
+                                    <div class="col-md-2 col-sm-6">
+                                        <label class="form-label text-muted small">
+                                            <i class="fas fa-toggle-on me-1"></i>Estado
+                                        </label>
+                                        <select class="form-select" name="estado">
+                                            <option value="">Todos los estados</option>
+                                            <option value="1" {{ request('estado') == '1' ? 'selected' : '' }}>Activo</option>
+                                            <option value="0" {{ request('estado') == '0' ? 'selected' : '' }}>Inactivo</option>
+                                        </select>
+                                    </div>
                                 </div>
 
                                 <!-- Botones de acción -->
@@ -290,7 +301,7 @@
                     <div class="d-flex justify-content-between align-items-center mb-3">
                         <div class="d-flex align-items-center gap-2">
                             <span class="badge bg-primary" id="resultCount">{{ $personas->total() }} personas encontradas</span>
-                            @if(request()->hasAny(['search', 'nombre', 'apellido', 'nuip', 'telefono', 'barrio']))
+                            @if(request()->hasAny(['search', 'nombre', 'apellido', 'nuip', 'telefono', 'barrio', 'estado']))
                             <span class="badge bg-warning text-dark">
                                 <i class="fas fa-filter me-1"></i>Filtros activos
                             </span>
@@ -536,7 +547,7 @@
         });
 
         // Auto-submit en cambios de filtros
-        const filterInputs = document.querySelectorAll('select[name="sort_by"], select[name="sort_order"], select[name="barrio"]');
+        const filterInputs = document.querySelectorAll('select[name="sort_by"], select[name="sort_order"], select[name="barrio"], select[name="estado"]');
         filterInputs.forEach(input => {
             input.addEventListener('change', function() {
                 showLoadingState();

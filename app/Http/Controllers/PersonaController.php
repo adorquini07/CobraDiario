@@ -37,6 +37,10 @@ class PersonaController extends Controller
             $query->where('barrio', 'LIKE', "%{$request->barrio}%");
         }
 
+        if ($request->filled('estado')) {
+            $query->where('estado', $request->estado);
+        }
+
         // Ordenamiento
         $sortBy = $request->get('sort_by', 'nombre');
         $sortOrder = $request->get('sort_order', 'asc');
