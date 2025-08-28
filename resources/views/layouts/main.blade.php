@@ -99,6 +99,12 @@
                             </a>
                             <ul class="dropdown-menu dropdown-menu-end">
                                 <li>
+                                    <a class="dropdown-item" href="{{ route('password.change') }}">
+                                        <i class="fas fa-key me-2"></i>Cambiar Contraseña
+                                    </a>
+                                </li>
+                                <li><hr class="dropdown-divider"></li>
+                                <li>
                                     <form method="POST" action="{{ route('logout') }}" class="d-inline">
                                         @csrf
                                         <button type="submit" class="dropdown-item text-danger" onclick="return confirm('¿Cerrar sesión?')">
